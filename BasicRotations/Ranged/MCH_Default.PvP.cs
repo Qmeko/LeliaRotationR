@@ -10,48 +10,48 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
     public static IBaseAction MarksmansSpitePvP { get; } = new BaseAction((ActionID)29415);
     //public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
 
-    [RotationConfig(CombatType.PvP, Name = "LB‚ğg—p‚µ‚Ü‚·B")]
+    [RotationConfig(CombatType.PvP, Name = "LBã‚’ä½¿ç”¨ã—ã¾ã™ã€‚")]
     public bool LBInPvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "LB:–‚’e‚ÌËè‚ğs‚¤‚½‚ß‚É•K—v‚Èƒ^[ƒQƒbƒg‚ÌHP%%‚Í")]
+    [RotationConfig(CombatType.PvP, Name = "LB:é­”å¼¾ã®å°„æ‰‹ã‚’è¡Œã†ãŸã‚ã«å¿…è¦ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®HP%%ã¯")]
     public int MSValue { get; set; } = 45;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒXƒvƒŠƒ“ƒg‚ğg‚¢‚Ü‚·B")]
+    [RotationConfig(CombatType.PvP, Name = "ã‚¹ãƒ—ãƒªãƒ³ãƒˆã‚’ä½¿ã„ã¾ã™ã€‚")]
     public bool UseSprintPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¢‚Ü‚·B")]
+    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã„ã¾ã™ã€‚")]
     public bool UseRecuperatePvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¤ƒvƒŒƒCƒ„[‚ÌHP%%‚ÍH")]
+    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã†ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP%%ã¯ï¼Ÿ")]
     public int RCValue { get; set; } = 75;
 
-    [RotationConfig(CombatType.PvP, Name = "ò‰»‚ğg‚¢‚Ü‚·B")]
+    [RotationConfig(CombatType.PvP, Name = "æµ„åŒ–ã‚’ä½¿ã„ã¾ã™ã€‚")]
     public bool UsePurifyPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒXƒ^ƒ“")]
+    [RotationConfig(CombatType.PvP, Name = "ã‚¹ã‚¿ãƒ³")]
     public bool Use1343PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "•XŒ‹")]
+    [RotationConfig(CombatType.PvP, Name = "æ°·çµ")]
     public bool Use3219PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "™X‚É‡–°")]
+    [RotationConfig(CombatType.PvP, Name = "å¾ã€…ã«ç¡çœ ")]
     public bool Use3022PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "‡–°")]
+    [RotationConfig(CombatType.PvP, Name = "ç¡çœ ")]
     public bool Use1348PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒoƒCƒ“ƒh")]
+    [RotationConfig(CombatType.PvP, Name = "ãƒã‚¤ãƒ³ãƒ‰")]
     public bool Use1345PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒwƒ”ƒB")]
+    [RotationConfig(CombatType.PvP, Name = "ãƒ˜ãƒ´ã‚£")]
     public bool Use1344PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "’¾–Ù")]
+    [RotationConfig(CombatType.PvP, Name = "æ²ˆé»™")]
     public bool Use1347PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "©•ª‚ª–hŒä’†‚ÍUŒ‚‚ğ’†~‚µ‚Ü‚·B")]
+    [RotationConfig(CombatType.PvP, Name = "è‡ªåˆ†ãŒé˜²å¾¡ä¸­ã¯æ”»æ’ƒã‚’ä¸­æ­¢ã—ã¾ã™ã€‚")]
     public bool GuardCancel { get; set; } = false;
 
 
@@ -84,12 +84,8 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 
     protected override bool GeneralGCD(out IAction? act)
     {
-        #region PvP
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
-
-        if (Player.HasStatus(true, StatusID.Overheated_3149) &&
-            HeatBlastPvP.CanUse(out act)) return true;
 
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && !HostileTarget.HasStatus(true, StatusID.Guard))
         {
@@ -102,24 +98,24 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 
             if (!Player.HasStatus(true, StatusID.Overheated_3149) && HostileTarget.DistanceToPlayer() <= 12 &&
                 ScattergunPvP.CanUse(out act, skipAoeCheck: true)) return true;
-            
-            if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.BioblasterPrimed) && HostileTarget.DistanceToPlayer() <= 12 &&
-                BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-
-            if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.AirAnchorPrimed) && 
-                AirAnchorPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-
-            if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true,StatusID.ChainSawPrimed) &&  
-                ChainSawPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         }
+
+        // Specific action sequences based on Overheated status or other specific conditions
+        if (Player.HasStatus(true, StatusID.Overheated_3149))
+        {
+            if (HeatBlastPvP.CanUse(out act)) return true;
+        }
+        else
+        {
+        if ((Player.HasStatus(true, StatusID.BioblasterPrimed) && Target.DistanceToPlayer() <= 12 && BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
+            (Player.HasStatus(true, StatusID.AirAnchorPrimed) && AirAnchorPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
+            (Player.HasStatus(true, StatusID.ChainSawPrimed) && ChainSawPvP.CanUse(out act, usedUp: true, skipAoeCheck: true))) return true;
+        }
+        
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && BlastChargePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-        if (Player.HasStatus(true, StatusID.Overheated_3149) &&
-            HeatBlastPvP.CanUse(out act)) return true;
 
-        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) &&
-            SprintPvP.CanUse(out act)) return true;
-        #endregion
+        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) && SprintPvP.CanUse(out act)) return true;
 
         return base.GeneralGCD(out act);
     }
@@ -135,20 +131,18 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 
     protected override bool AttackAbility(out IAction? act)
     {
-        #region PvP
         act = null;
-
-        if (BishopAutoturretPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+        //Not working.
+        if (BishopAutoturretPvP.CanUse(out act, usedUp: true, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
 
         // Use WildfirePvP if Overheated
         if (Player.HasStatus(true, StatusID.Overheated_3149) && WildfirePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
 
         // Check if BioblasterPvP, AirAnchorPvP, or ChainSawPvP can be used
-        if (InCombat &&
-            (BioblasterPvP.CanUse(out act) || AirAnchorPvP.CanUse(out act) || ChainSawPvP.CanUse(out act)) &&
-            AnalysisPvP.CanUse(out act)) return true;
+        if (InCombat && !Player.HasStatus(true,StatusID.Analysis) &&
+            ((BioblasterPvP.IsInCooldown) || AirAnchorPvP.IsInCooldown || ChainSawPvP.IsInCooldown) &&
+            AnalysisPvP.CanUse(out act, usedUp: true)) return true;
 
-        #endregion
         return base.AttackAbility(out act);
     }
 }
