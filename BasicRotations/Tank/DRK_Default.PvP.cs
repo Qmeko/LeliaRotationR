@@ -8,59 +8,59 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
     public static IBaseAction EventidePvP { get; } = new BaseAction((ActionID)29097);
     //public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
 
-    [RotationConfig(CombatType.PvP, Name = "LB‚ğg—p‚µ‚Ü‚·B\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
+    [RotationConfig(CombatType.PvP, Name = "LBã‚’ä½¿ç”¨ã—ã¾ã™ã€‚\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
     public bool LBInPvP { get; set; } = false;
 
     [Range(1, 100000, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "LB:ƒC[ƒuƒ“ƒ^ƒCƒh‚ğs‚¤‚½‚ß‚É•K—v‚ÈƒvƒŒƒCƒ„[‚ÌHP‚ÍH\n")]
+    [RotationConfig(CombatType.PvP, Name = "LB:ã‚¤ãƒ¼ãƒ–ãƒ³ã‚¿ã‚¤ãƒ‰ã‚’è¡Œã†ãŸã‚ã«å¿…è¦ãªãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã¯ï¼Ÿ\n")]
     public int EVValue { get; set; } = 45000;
 
     [Range(1, 100000, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "ƒVƒƒƒhƒEƒuƒŠƒ“ƒK[‚ğg—p‚·‚éƒvƒŒƒCƒ„[‚ÌHP‚ÍHH\n")]
+    [RotationConfig(CombatType.PvP, Name = "ã‚·ãƒ£ãƒ‰ã‚¦ãƒ–ãƒªãƒ³ã‚¬ãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HPã¯ï¼Ÿï¼Ÿ\n")]
     public int SBValue { get; set; } = 45000;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒXƒvƒŠƒ“ƒg‚ğg‚¢‚Ü‚·B\nSprint")]
+    [RotationConfig(CombatType.PvP, Name = "ã‚¹ãƒ—ãƒªãƒ³ãƒˆã‚’ä½¿ã„ã¾ã™ã€‚\nSprint")]
     public bool UseSprintPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¢‚Ü‚·B\nRecuperate")]
+    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã„ã¾ã™ã€‚\nRecuperate")]
     public bool UseRecuperatePvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¤ƒvƒŒƒCƒ„[‚ÌHP%%‚ÍH\nRecuperateHP%%?")]
+    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã†ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP%%ã¯ï¼Ÿ\nRecuperateHP%%?")]
     public int RCValue { get; set; } = 75;
 
-    [RotationConfig(CombatType.PvP, Name = "ò‰»‚ğg‚¢‚Ü‚·B\nUse Purify")]
+    [RotationConfig(CombatType.PvP, Name = "æµ„åŒ–ã‚’ä½¿ã„ã¾ã™ã€‚\nUse Purify")]
     public bool UsePurifyPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒXƒ^ƒ“\nUse Purify on Stun")]
+    [RotationConfig(CombatType.PvP, Name = "ã‚¹ã‚¿ãƒ³\nUse Purify on Stun")]
     public bool Use1343PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "•XŒ‹\nUse Purify on DeepFreeze")]
+    [RotationConfig(CombatType.PvP, Name = "æ°·çµ\nUse Purify on DeepFreeze")]
     public bool Use3219PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "™X‚É‡–°\nUse Purify on HalfAsleep")]
+    [RotationConfig(CombatType.PvP, Name = "å¾ã€…ã«ç¡çœ \nUse Purify on HalfAsleep")]
     public bool Use3022PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "‡–°\nUse Purify on Sleep")]
+    [RotationConfig(CombatType.PvP, Name = "ç¡çœ \nUse Purify on Sleep")]
     public bool Use1348PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒoƒCƒ“ƒh\nUse Purify on Bind")]
+    [RotationConfig(CombatType.PvP, Name = "ãƒã‚¤ãƒ³ãƒ‰\nUse Purify on Bind")]
     public bool Use1345PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ƒwƒ”ƒB\nUse Purify on Heavy")]
+    [RotationConfig(CombatType.PvP, Name = "ãƒ˜ãƒ´ã‚£\nUse Purify on Heavy")]
     public bool Use1344PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "’¾–Ù\nUse Purify on Silence")]
+    [RotationConfig(CombatType.PvP, Name = "æ²ˆé»™\nUse Purify on Silence")]
     public bool Use1347PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "–hŒä‚ğg‚¤")]
+    [RotationConfig(CombatType.PvP, Name = "é˜²å¾¡ã‚’ä½¿ã†")]
     public bool UseGuardPvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "–hŒä‚ğg‚¤ƒvƒŒƒCƒ„[‚ÌHP%%‚ÍH\n")]
+    [RotationConfig(CombatType.PvP, Name = "é˜²å¾¡ã‚’ä½¿ã†ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP%%ã¯ï¼Ÿ\n")]
     public int GuardValue { get; set; } = 75;
 
-    [RotationConfig(CombatType.PvP, Name = "©•ª‚ª–hŒä’†‚ÍUŒ‚‚ğ’†~‚µ‚Ü‚·B\nStop attacking while in Guard.")]
+    [RotationConfig(CombatType.PvP, Name = "è‡ªåˆ†ãŒé˜²å¾¡ä¸­ã¯æ”»æ’ƒã‚’ä¸­æ­¢ã—ã¾ã™ã€‚\nStop attacking while in Guard.")]
     public bool GuardCancel { get; set; } = false;
 
 
@@ -142,7 +142,9 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
         }
         if(!HostileTarget.HasStatus(true, StatusID.Guard) && !Player.HasStatus(true, StatusID.UndeadRedemption))
         {
+            //Not working.(TheBlackestNightPvP)        
             if (TheBlackestNightPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true) && InCombat) return true;
+            
             if (PlungePvP.CanUse(out act, usedUp: true)) return true;
             if (Player.HasStatus(true, StatusID.SaltedEarth_3036) && SaltAndDarknessPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
             if (SaltedEarthPvP.CanUse(out act, usedUp: true, skipAoeCheck: true) && InCombat) return true;
