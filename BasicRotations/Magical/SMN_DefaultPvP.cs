@@ -97,41 +97,29 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
     }
 
 protected override bool GeneralGCD(out IAction act)
-		{
+	{
 			act = null;
-
-        #region PvP
-
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
-
         //if (!Player.HasStatus(true, StatusID.Guard) && GuardPvP && Player.GetHealthRatio*100 < GuardValue &&
         //PvP_Guard.CanUse(out act, CanUseOption.MustUse) && InCombat) return true;
 
-
-        //if (!Player.HasStatus(true, StatusID.PvP_Guard) && Configs.GetBool("RecuperatePvP") && Player.GetHealthRatio() <= Configs.GetInt("RCValue") &&
         if (!Player.HasStatus(true, StatusID.Guard) && UseRecuperatePvP && Player.GetHealthRatio()*100 < RCValue &&
             RecuperatePvP.CanUse(out act, usedUp: true)) return true;
 
+  	 //Not working.(SummonBahamutPvP,SummonPhoenixPvP)
+         if (LimitBreakLevel >=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
+        	HostileTarget.GetHealthRatio()* 100 <= SBValue && Player.GetHealthRatio()* 100 >= SPValue)
+            	{
+                	if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonBahamutPvP.CanUse(out act, usedUp: true)) return true;
+            	}
+         else if (LimitBreakLevel>=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
+		HostileTarget.GetHealthRatio()*100 <= SPValue && Player.GetHealthRatio()* 100 < SPValue)
+            	{
+                	if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonPhoenixPvP.CanUse(out act, usedUp: true)) return true;
+            	}
 
-            if (LimitBreakLevel >=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
-                HostileTarget.GetHealthRatio()* 100 <= SBValue && Player.GetHealthRatio()* 100 >= SPValue)
-            {
-                if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonBahamutPvP.CanUse(out act, usedUp: true)) return true;
-            }
-            else if (LimitBreakLevel>=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
-                HostileTarget.GetHealthRatio()*100 <= SPValue && Player.GetHealthRatio()* 100 < SPValue)
-            {
-                if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonPhoenixPvP.CanUse(out act, usedUp: true)) return true;
-            }
-
-            //if (Configs.GetBool("CCPvP"))
-            //    {
-            //        if ((HostileTarget && HostileTarget.CurrentHp < Configs.GetInt("CrimsonValue"))
-            //            && PvP_CrimsonCyclone.CanUse(out act, CanUseOption.MustUseEmpty)) return true;
-            //    }
             if (CCPvP && HostileTarget && HostileTarget.GetHealthRatio()*100 < CrimsonValue && 
                 CrimsonCyclonePvP.CanUse(out act, usedUp: true)) return true;
-            //if (PvP_CrimsonStrike.IsEnabled && PvP_CrimsonStrike.CanUse(out act, CanUseOption.MustUse)) return true;
 
             if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) && 
                 PvP_Slipstream.CanUse(out act, CanUseOption.MustUse)) return true;
