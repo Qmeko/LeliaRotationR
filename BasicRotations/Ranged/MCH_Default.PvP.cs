@@ -105,10 +105,8 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
             }
         }
 
-
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && BlastChargePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-        //if (Player.HasStatus(true, StatusID.Overheated_3149) && HeatBlastPvP.CanUse(out act)) return true;
 
         if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) && SprintPvP.CanUse(out act)) return true;
 
