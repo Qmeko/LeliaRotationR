@@ -96,9 +96,9 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
-        if (LimitBreakLevel>=1 && LBInPvP && HostileTarget.CurrentHp <= FFValue && FinalFantasiaPvP.CanUse(out act)) return true;
+        if (LimitBreakLevel>=1 && LBInPvP && Target.CurrentHp <= FFValue && FinalFantasiaPvP.CanUse(out act)) return true;
 
-        if (!HostileTarget.HasStatus(true, StatusID.Guard))
+        if (!Target.HasStatus(true, StatusID.Guard))
         {
             if (BlastArrowPvP.CanUse(out act, skipAoeCheck: true)) return true;
             if (ApexArrowPvP.CanUse(out act, skipAoeCheck: true)) return true;
@@ -128,7 +128,7 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
-        if (!HostileTarget.HasStatus(true, StatusID.Guard))
+        if (!Target.HasStatus(true, StatusID.Guard))
         {
             if (SNocturne && SilentNocturnePvP.CanUse(out act)) return true;
             if (TheWardensPaeanPvP.CanUse(out act)) return true;
