@@ -101,13 +101,13 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
 
 
         //if (HostileTarget && PvP_Eventide.IsEnabled && PvP_Guard.CanUse(out act, CanUseOption.MustUse)) return true;
-        if (LimitBreakLevel>=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget && Player.CurrentHp < EVValue )
+        if (LimitBreakLevel>=1 && !Target.HasStatus(true, StatusID.Guard) && LBInPvP && Player.CurrentHp < EVValue )
         {
             if (EventidePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         }
 
-        if (!HostileTarget.HasStatus(true, StatusID.Guard) && QuietusPvP.CanUse(out act, usedUp: true, skipAoeCheck: true) && InCombat) return true;
-        if (!HostileTarget.HasStatus(true, StatusID.Guard) && Player.HasStatus(true, StatusID.Blackblood) && BloodspillerPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        if (!Target.HasStatus(true, StatusID.Guard) && QuietusPvP.CanUse(out act, usedUp: true, skipAoeCheck: true) && InCombat) return true;
+        if (!Target.HasStatus(true, StatusID.Guard) && Player.HasStatus(true, StatusID.Blackblood) && BloodspillerPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
 
 
 
@@ -132,7 +132,7 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
     protected override bool AttackAbility(out IAction? act)
     {
         if (ShadowbringerPvP.CanUse(out act)) return true;
-        if (!Player.HasStatus(true, StatusID.Sprint) && !HostileTarget.HasStatus(true, StatusID.Guard) && (ShadowbringerPvP.IsInCooldown && Player.CurrentHp > SBValue) ||
+        if (!Player.HasStatus(true, StatusID.Sprint) && !Target.HasStatus(true, StatusID.Guard) && (ShadowbringerPvP.IsInCooldown && Player.CurrentHp > SBValue) ||
             Player.HasStatus(true, StatusID.UndeadRedemption) ||
             Player.HasStatus(true, StatusID.DarkArts_3034) ||
             Player.HasStatus(true, StatusID.UndeadRedemption) && Player.HasStatus(true, StatusID.Guard))
@@ -140,7 +140,7 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
             act = ShadowbringerPvP;
             return true;
         }
-        if(!HostileTarget.HasStatus(true, StatusID.Guard) && !Player.HasStatus(true, StatusID.UndeadRedemption))
+        if(!Target.HasStatus(true, StatusID.Guard) && !Player.HasStatus(true, StatusID.UndeadRedemption))
         {
             //Not working.(TheBlackestNightPvP)  
             if (TheBlackestNightPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true) && InCombat) return true;
