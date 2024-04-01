@@ -142,7 +142,7 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
         }
         if(!HostileTarget.HasStatus(true, StatusID.Guard) && !Player.HasStatus(true, StatusID.UndeadRedemption))
         {
-            //Not working.(TheBlackestNightPvP)        
+            //Not working.(TheBlackestNightPvP)  
             if (TheBlackestNightPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true) && InCombat) return true;
             
             if (PlungePvP.CanUse(out act, usedUp: true)) return true;
