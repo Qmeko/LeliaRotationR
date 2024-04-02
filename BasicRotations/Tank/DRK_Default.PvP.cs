@@ -8,7 +8,7 @@ public sealed class DRK_LeliaDefaultPvP : DarkKnightRotation
     public static IBaseAction EventidePvP { get; } = new BaseAction((ActionID)29097);
     //public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
 
-    [RotationConfig(CombatType.PvP, Name = "LBを使用します。\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
+    [RotationConfig(CombatType.PvP, Name = "LBを使用します。\nUse Limit Break.")]
     public bool LBInPvP { get; set; } = false;
 
     [Range(1, 100000, ConfigUnitType.Percent, 1)]
