@@ -83,20 +83,19 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
         {
             if (status.Value && Player.HasStatus(true, (StatusID)status.Key))
             {
-                return PurifyPvP.CanUse(out action, skipClippingCheck: true);
+               return PurifyPvP.CanUse(out action, skipClippingCheck: true);
             }
         }
 
         return false;
     }
 
-
-    protected override bool GeneralGCD(out IAction? act)
+     protected override bool GeneralGCD(out IAction? act)
     {
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
-        if (LimitBreakLevel>=1 && LBInPvP && FinalFantasiaPvP.Target.Target?.CurrentHp <= FFValue && FinalFantasiaPvP.CanUse(out act)) return true;
+        if (LimitBreakLevel >= 1 && LBInPvP && FinalFantasiaPvP.Target.Target?.CurrentHp <= FFValue && FinalFantasiaPvP.CanUse(out act)) return true;
 
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
@@ -115,13 +114,12 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 
     protected override bool EmergencyAbility(IAction nextGCD, out IAction? act)
     {
-        if (UseRecuperatePvP && Player.CurrentHp / Player.MaxHp * 100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+        if (UseRecuperatePvP && Player.GetHealthRatio()*100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
 
         if (TryPurify(out act)) return true;
 
         return base.EmergencyAbility(nextGCD, out act);
     }
-
 
     protected override bool AttackAbility(out IAction? act)
     {
@@ -130,8 +128,8 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
-            if (SNocturne && SilentNocturnePvP.CanUse(out act)) return true;
-            if (TheWardensPaeanPvP.CanUse(out act)) return true;
+            if (!Player.HasStatus(true, (StatusID)3137) && SNocturne && SilentNocturnePvP.CanUse(out act)) return true;
+            if (!Player.HasStatus(true,(StatusID)3137) && TheWardensPaeanPvP.CanUse(out act)) return true;
             if (EmpyrealArrowPvP.CanUse(out act, usedUp: true) && 
                 EmpyrealArrowPvP.Cooldown.CurrentCharges >= EmpyrealCh) return true;
             if (UseRepelling && RepellingShotPvP.CanUse(out act)) return true;
