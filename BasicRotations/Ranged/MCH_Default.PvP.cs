@@ -89,21 +89,22 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
         {
             if (HeatBlastPvP.CanUse(out act)) return true;
         }
-        else if ((Player.HasStatus(true, StatusID.BioblasterPrimed) && Target.DistanceToPlayer() <= 12 && BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
+        else if ((Player.HasStatus(true, StatusID.BioblasterPrimed) && HostileTarget?.DistanceToPlayer() <= 12 && BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
                 (Player.HasStatus(true, StatusID.AirAnchorPrimed) && AirAnchorPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
                 (Player.HasStatus(true, StatusID.ChainSawPrimed) && ChainSawPvP.CanUse(out act, usedUp: true, skipAoeCheck: true))) return true;
         else
         { 
-            if (!Target.HasStatus(true, StatusID.Guard))
+            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
             {
                 if (Player.HasStatus(true, StatusID.Overheated_3149)) return false;
 
-                if (LimitBreakLevel >= 1 && LBInPvP && Target.GetHealthRatio() * 100 <= MSValue &&
+                if (HostileTarget && LimitBreakLevel >= 1 && LBInPvP && HostileTarget?.GetHealthRatio() * 100 <= MSValue &&
                     MarksmansSpitePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-                if (Target.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true)) return true;
+                if (HostileTarget?.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true)) return true;
 
             }
         }
+
 
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         if (!Player.HasStatus(true, StatusID.Overheated_3149) && BlastChargePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
@@ -115,7 +116,7 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 
     protected override bool EmergencyAbility(IAction nextGCD, out IAction? act)
     {
-        if (UseRecuperatePvP && Player.CurrentHp / Player.MaxHp * 100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+        if (UseRecuperatePvP && Player.GetHealthRatio() * 100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
 
         if (TryPurify(out act)) return true;
 
