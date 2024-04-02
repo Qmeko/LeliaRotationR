@@ -1,6 +1,6 @@
-﻿namespace DefaultRotations.Magical;
+namespace DefaultRotations.Magical;
 
-[Rotation("Lelia's Default", CombatType.PvP, GameVersion = "6.58")]
+[Rotation("Lelia's PvP", CombatType.PvP, GameVersion = "6.58")]
 [SourceCode(Path = "main/DefaultRotations/Magical/SMN_DefaultPvP.cs")]
 public sealed class SMN_LeliaDefaultPvP : SummonerRotation
 {
@@ -23,7 +23,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
     [RotationConfig(CombatType.PvP, Name = "クリムゾンサイクロンを使用するターゲットのHP%%は？")]
-    public int CrimsonValue { get; set; } = 40;
+    public int CrimsonValue { get; set; } = 35;
 
     [RotationConfig(CombatType.PvP, Name = "守りの光を使用しますか？")]
     private bool RadiantA { get; set; } = true;
@@ -66,7 +66,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
     [RotationConfig(CombatType.PvP, Name = "沈黙:Silence")]
     private bool Use1347PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "自分が防御中は攻撃を中止します。\nStop attacking while in Guard.")]
+    [RotationConfig(CombatType.PvP, Name = "自分が防御中は攻撃を中止します。\n Stop attacking while in Guard.")]
     private bool GuardCancel { get; set; } = false;
 
     private bool TryPurify(out IAction? action)
@@ -96,71 +96,73 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
         return false;
     }
 
-protected override bool GeneralGCD(out IAction act)
-	{
-			act = null;
-        if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
-        //if (!Player.HasStatus(true, StatusID.Guard) && GuardPvP && Player.GetHealthRatio*100 < GuardValue &&
-        //PvP_Guard.CanUse(out act, CanUseOption.MustUse) && InCombat) return true;
+    protected override bool GeneralGCD(out IAction? act)
+    {
+        act = null;
 
-        if (!Player.HasStatus(true, StatusID.Guard) && UseRecuperatePvP && Player.GetHealthRatio()*100 < RCValue &&
+
+        if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
+
+        if (!Player.HasStatus(true, StatusID.Guard) && UseRecuperatePvP && Player.GetHealthRatio() * 100 < RCValue &&
             RecuperatePvP.CanUse(out act, usedUp: true)) return true;
 
-  	 //Not working.(SummonBahamutPvP,SummonPhoenixPvP)
-         if (LimitBreakLevel >=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
-        	HostileTarget.GetHealthRatio()* 100 <= SBValue && Player.GetHealthRatio()* 100 >= SPValue)
-            	{
-                	if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonBahamutPvP.CanUse(out act, usedUp: true)) return true;
-            	}
-         else if (LimitBreakLevel>=1 && !HostileTarget.HasStatus(true, StatusID.Guard) && LBInPvP && HostileTarget &&
-		HostileTarget.GetHealthRatio()*100 <= SPValue && Player.GetHealthRatio()* 100 < SPValue)
-            	{
-                	if (!HostileTarget.HasStatus(true, StatusID.Guard) && SummonPhoenixPvP.CanUse(out act, usedUp: true)) return true;
-            	}
 
-            if (CCPvP && HostileTarget && HostileTarget.GetHealthRatio()*100 < CrimsonValue && 
-                CrimsonCyclonePvP.CanUse(out act, usedUp: true)) return true;
+        if (LimitBreakLevel >= 1 && (!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && LBInPvP &&
+                HostileTarget?.GetHealthRatio() * 100 <= SBValue && Player.GetHealthRatio() * 100 >= SPValue)
+        {
+            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SummonBahamutPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        }
+        else if (LimitBreakLevel >= 1 && (!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && LBInPvP && 
+            HostileTarget?.GetHealthRatio() * 100 <= SPValue && Player.GetHealthRatio() * 100 < SPValue)
+        {
+            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SummonPhoenixPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        }
 
-            if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) && 
-                PvP_Slipstream.CanUse(out act, CanUseOption.MustUse)) return true;
+        //if (CrimsonStrikePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        if (CCPvP && HostileTarget?.GetHealthRatio() * 100 < CrimsonValue)
+        {
+            if (CrimsonCyclonePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        }
 
-            if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) && Player.HasStatus(true, StatusID.PvP_DreadwyrmTrance) &&
-                PvP_AstralImpulse.CanUse(out act, CanUseOption.MustUse)) return true;
-            if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) && Player.HasStatus(true, StatusID.PvP_FirebirdTrance) &&
-                PvP_FountainOfFire.CanUse(out act, CanUseOption.MustUse)) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) &&
+                SlipstreamPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && Player.HasStatus(true, StatusID.DreadwyrmTrance_3228) &&
+            AstralImpulsePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && Player.HasStatus(true, StatusID.FirebirdTrance) &&
+            FountainOfFirePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
 
 
-            if (PvP_Ruin3.CanUse(out act, CanUseOption.MustUse)) return true;
+        if (RuinIiiPvP.CanUse(out act)) return true;
 
-        if (Configs.GetBool("GuardCancel") && Player.HasStatus(true, StatusID.PvP_Guard)) return false;
-        if (!Player.HasStatus(true, StatusID.PvP_Guard) && Configs.GetBool("SprintPvP") && !Player.HasStatus(true, StatusID.PvP_Sprint) &&
-                PvP_Sprint.CanUse(out act, CanUseOption.MustUse)) return true;
-            return base.GeneralGCD(out act);
-			//return false;
-			#endregion
-		}
+        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) &&
+            SprintPvP.CanUse(out act)) return true;
+
+        return base.GeneralGCD(out act);
+
+    }
 
     protected override bool EmergencyAbility(IAction nextGCD, out IAction? act)
     {
-        if (UseRecuperatePvP && Player.CurrentHp / Player.MaxHp * 100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+        if (UseRecuperatePvP && Player.GetHealthRatio() * 100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+        if (RadiantA && Player.GetHealthRatio() * 100 <= RAValue &&
+            RadiantAegisPvP.CanUse(out act)) return true;
 
         if (TryPurify(out act)) return true;
 
         return base.EmergencyAbility(nextGCD, out act);
     }
 
-    protected override bool AttackAbility(out IAction act)
+    protected override bool AttackAbility(out IAction? act)
     {
-        if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard))
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
-            if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) &&
-                PvP_MountainBuster.CanUse(out act, CanUseOption.MustUse)) return true;
-            if (!HostileTarget.HasStatus(true, StatusID.PvP_Guard) && InCombat &&
-                PvP_Fester.CanUse(out act, CanUseOption.MustUseEmpty)) return true;
+            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) &&
+                MountainBusterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && InCombat &&
+                FesterPvP.CanUse(out act, usedUp: true)) return true;
 
         }
-        if (Configs.GetBool("RadiantA") && ((Player.CurrentHp / Player.MaxHp) * 100) <= Configs.GetInt("RAValue") &&
-            PvP_RadiantAegis.CanUse(out act, CanUseOption.MustUse)) return true;
 
         return base.AttackAbility(out act);
     }
