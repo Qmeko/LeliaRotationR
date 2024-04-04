@@ -28,74 +28,73 @@ public sealed class MNK_LeliaDefaultPvP : MonkRotation
 
     protected override bool GeneralGCD(out IAction? act)
     {
-			act = null;
+        act = null;
 
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
         if (SixsidedStarPvP.CanUse(out act, usedUp: true)) return true;
 
         if (LBInPvP && HostileTarget?.CurrentHp < MDValue && PhantomRushPvP.IsInCooldown && LimitBreakLevel>=1 && InCombat)
-			{
-				if (RisingPhoenixPvE.CanUse(out act, skipAoeCheck: true)) return true;
-				if (EnlightenmentPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-				if (SixsidedStarPvP.CanUse(out act, usedUp: true)) return true;
-				if (MeteodrivePvP.CanUse(out act, usedUp: true) && InCombat) return true;
-				if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true)) return true;
-				if (PhantomRushPvP.CanUse(out act, usedUp: true)) return true;
- 				
-			}
-
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && !Player.HasStatus(true, StatusID.Sprint) && !EnlightenmentPvP.Cooldown.IsCoolingDown && HostileTarget?.CurrentHp < ENValue && InCombat)
-            {
-                if (EnlightenmentPvP.CanUse(out act, skipAoeCheck: true)) return true;
-            }
-
+        {
+            if (RisingPhoenixPvE.CanUse(out act, skipAoeCheck: true)) return true;
+            if (EnlightenmentPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+            if (SixsidedStarPvP.CanUse(out act, usedUp: true)) return true;
+            if (MeteodrivePvP.CanUse(out act, usedUp: true) && InCombat) return true;
+			if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true)) return true;
 			if (PhantomRushPvP.CanUse(out act, usedUp: true)) return true;
-			if (DemolishPvP.CanUse(out act, usedUp: true)) return true;
-			if (TwinSnakesPvP.CanUse(out act, usedUp: true)) return true;
-			if (DragonKickPvP.CanUse(out act, usedUp: true)) return true;
-			if (SnapPunchPvP.CanUse(out act, usedUp: true)) return true;
-			if (TrueStrikePvP.CanUse(out act, usedUp: true)) return true;
-			if (BootshinePvP.CanUse(out act, usedUp: true)) return true;
+ 				
+        }
 
-            if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
-            if (!Player.HasStatus(true, StatusID.Guard) &&  !Player.HasStatus(true, StatusID.Sprint) &&
-                SprintPvP.CanUse(out act, usedUp: true)) return true;
-            return base.GeneralGCD(out act);
-            //return false;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && !Player.HasStatus(true, StatusID.Sprint) && !EnlightenmentPvP.Cooldown.IsCoolingDown && HostileTarget?.CurrentHp < ENValue && InCombat)
+        {
+            if (EnlightenmentPvP.CanUse(out act, skipAoeCheck: true)) return true;
+        }
 
+		if (PhantomRushPvP.CanUse(out act, usedUp: true)) return true;
+		if (DemolishPvP.CanUse(out act, usedUp: true)) return true;
+		if (TwinSnakesPvP.CanUse(out act, usedUp: true)) return true;
+		if (DragonKickPvP.CanUse(out act, usedUp: true)) return true;
+		if (SnapPunchPvP.CanUse(out act, usedUp: true)) return true;
+		if (TrueStrikePvP.CanUse(out act, usedUp: true)) return true;
+		if (BootshinePvP.CanUse(out act, usedUp: true)) return true;
+
+        if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
+        if (!Player.HasStatus(true, StatusID.Guard) &&  !Player.HasStatus(true, StatusID.Sprint) &&
+            SprintPvP.CanUse(out act, usedUp: true)) return true;
+
+        return base.GeneralGCD(out act);
 	}
 
     protected override bool AttackAbility(out IAction? act)
     {
-            if ((LBInPvP && HostileTarget?.CurrentHp < MDValue &&  LimitBreakLevel>=1 && InCombat))
-            {
-                if (MeteodrivePvP.CanUse(out act, usedUp: true)) return true;
-                if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
-                if (SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-                if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
-            }
+        if ((LBInPvP && HostileTarget?.CurrentHp < MDValue &&  LimitBreakLevel>=1 && InCombat))
+        {
+            if (MeteodrivePvP.CanUse(out act, usedUp: true)) return true;
+            if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
+            if (SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+            if (RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
+        }
 
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && TCInPvP && HostileTarget && InCombat)
-            {
-                if (ThunderclapPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-            }
-            else
-            {
-                if (ThunderclapPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-            }
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && TCInPvP && HostileTarget && InCombat)
+        {
+            if (ThunderclapPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        }
+        else
+        {
+            if (ThunderclapPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        }
 
-            //if (PvP_Thunderclap.CanUse(out act, CanUseOption.MustUseEmpty)) return true;
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-            //if (PvP_Enlightenment.CanUse(out act, CanUseOption.MustUseEmpty) && InCombat) return true;
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
+        //if (PvP_Thunderclap.CanUse(out act, CanUseOption.MustUseEmpty)) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        //if (PvP_Enlightenment.CanUse(out act, CanUseOption.MustUseEmpty) && InCombat) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
 
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RiddleOfEarthPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-            if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && Player.HasStatus(true, StatusID.EarthResonance) && InCombat)
-            {
-                if (EarthsReplyPvP.CanUse(out act, usedUp: true)) return true;
-            }
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RiddleOfEarthPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && Player.HasStatus(true, StatusID.EarthResonance) && InCombat)
+        {
+            if (EarthsReplyPvP.CanUse(out act, usedUp: true)) return true;
+        }
 
-            return base.AttackAbility(out act);
+        return base.AttackAbility(out act);
     }
 }
 
