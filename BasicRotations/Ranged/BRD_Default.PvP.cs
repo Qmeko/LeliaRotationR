@@ -9,58 +9,58 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 {
     public static IBaseAction FinalFantasiaPvP { get; } = new BaseAction((ActionID)29401);
 
-    [RotationConfig(CombatType.PvP, Name = "LBã‚’ä½¿ç”¨ã—ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "LB‚ğg—p‚µ‚Ü‚·B")]
     private bool LBInPvP { get; set; } = false;
 
     [Range(1, 100000, ConfigUnitType.None, 1)]
-    [RotationConfig(CombatType.PvP, Name = "LB:è‹±é›„ã®ãƒ•ã‚¡ãƒ³ã‚¿ã‚¸ã‚¢ã‚’è¡Œã†ãŸã‚ã«å¿…è¦ãªæ•µã®HPã¯ï¼Ÿ")]
+    [RotationConfig(CombatType.PvP, Name = "LB:‰p—Y‚Ìƒtƒ@ƒ“ƒ^ƒWƒA‚ğs‚¤‚½‚ß‚É•K—v‚È“G‚ÌHP‚ÍH")]
     public int FFValue { get; set; } = 50000;
 
     [Range(1, 3, ConfigUnitType.None, 1)]
-    [RotationConfig(CombatType.PvP, Name = "ã‚¨ãƒ³ãƒ”ãƒªã‚¢ãƒ«ã‚¢ãƒ­ãƒ¼ã‚’ä½¿ã†ãƒãƒ£ãƒ¼ã‚¸æ•°ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "ƒGƒ“ƒsƒŠƒAƒ‹ƒAƒ[‚ğg‚¤ƒ`ƒƒ[ƒW”B")]
     public int EmpyrealCh { get; set; } = 1;
 
-    [RotationConfig(CombatType.PvP, Name = "ãƒªãƒšãƒªãƒ³ã‚°ã‚·ãƒ§ãƒƒãƒˆã‚’ä½¿ç”¨ã—ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "ƒŠƒyƒŠƒ“ƒOƒVƒ‡ƒbƒg‚ğg—p‚µ‚Ü‚·B")]
     private bool UseRepelling { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "é»™è€…ã®ãƒã‚¯ã‚¿ãƒ¼ãƒ³ã‚’ä½¿ç”¨ã—ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "–ÙÒ‚ÌƒmƒNƒ^[ƒ“‚ğg—p‚µ‚Ü‚·B")]
     private bool SNocturne { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ã‚¹ãƒ—ãƒªãƒ³ãƒˆã‚’ä½¿ã„ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "ƒXƒvƒŠƒ“ƒg‚ğg‚¢‚Ü‚·B")]
     private bool UseSprintPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã„ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¢‚Ü‚·B")]
     private bool UseRecuperatePvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã†ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP%%ã¯ï¼Ÿ")]
+    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ğg‚¤ƒvƒŒƒCƒ„[‚ÌHP%%‚ÍH")]
     public int RCValue { get; set; } = 75;
 
-    [RotationConfig(CombatType.PvP, Name = "æµ„åŒ–ã‚’ä½¿ã„ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "ò‰»‚ğg‚¢‚Ü‚·B")]
     private bool UsePurifyPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ã‚¹ã‚¿ãƒ³:Stun")]
+    [RotationConfig(CombatType.PvP, Name = "ƒXƒ^ƒ“:Stun")]
     private bool Use1343PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "æ°·çµ:DeepFreeze")]
+    [RotationConfig(CombatType.PvP, Name = "•XŒ‹:DeepFreeze")]
     private bool Use3219PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "å¾ã€…ã«ç¡çœ :HalfAsleep")]
+    [RotationConfig(CombatType.PvP, Name = "™X‚É‡–°:HalfAsleep")]
     private bool Use3022PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ç¡çœ :Sleep")]
+    [RotationConfig(CombatType.PvP, Name = "‡–°:Sleep")]
     private bool Use1348PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ãƒã‚¤ãƒ³ãƒ‰:Bind")]
+    [RotationConfig(CombatType.PvP, Name = "ƒoƒCƒ“ƒh:Bind")]
     private bool Use1345PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ãƒ˜ãƒ´ã‚£:Heavy")]
+    [RotationConfig(CombatType.PvP, Name = "ƒwƒ”ƒB:Heavy")]
     private bool Use1344PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "æ²ˆé»™:Silence")]
+    [RotationConfig(CombatType.PvP, Name = "’¾–Ù:Silence")]
     private bool Use1347PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "è‡ªåˆ†ãŒé˜²å¾¡ä¸­ã¯æ”»æ’ƒã‚’ä¸­æ­¢ã—ã¾ã™ã€‚")]
+    [RotationConfig(CombatType.PvP, Name = "©•ª‚ª–hŒä’†‚ÍUŒ‚‚ğ’†~‚µ‚Ü‚·B")]
     private bool GuardCancel { get; set; } = false;
 
     private bool TryPurify(out IAction? action)
@@ -81,7 +81,7 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 
         foreach (var status in purifyStatuses)
         {
-            if (status.Value && Player.HasStatus(true, (StatusID)status.Key))
+            if (status.Value && (Player?.HasStatus(true, (StatusID)status.Key) ?? false))
             {
                return PurifyPvP.CanUse(out action, skipClippingCheck: true);
             }
@@ -101,12 +101,12 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
         {
             if (BlastArrowPvP.CanUse(out act, skipAoeCheck: true)) return true;
             if (ApexArrowPvP.CanUse(out act, skipAoeCheck: true)) return true;
-            if (PitchPerfectPvP.CanUse(out act)) return true;
+            //if (PitchPerfectPvP.CanUse(out act)) return true;
         }
         if (PowerfulShotPvP.CanUse(out act)) return true;
 
-        if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
-        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) &&
+        if (GuardCancel && (Player?.HasStatus(true, StatusID.Guard) ?? false)) return false;
+        if ((!Player?.HasStatus(true, StatusID.Guard) ?? false) && UseSprintPvP && (!Player?.HasStatus(true, StatusID.Sprint) ?? false) &&
             SprintPvP.CanUse(out act)) return true;
 
         return base.GeneralGCD(out act);
@@ -114,7 +114,23 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 
     protected override bool EmergencyAbility(IAction nextGCD, out IAction? act)
     {
-        if (UseRecuperatePvP && Player.GetHealthRatio()*100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+        if ((!Player?.HasStatus(true, StatusID.Guard) ?? false) && UseRecuperatePvP && 
+            Player?.GetHealthRatio()*100 < RCValue && RecuperatePvP.CanUse(out act)) return true;
+
+        if ((!Player?.HasStatus(true, StatusID.Guard) ?? false) && UsePurifyPvP)
+        {
+            if ((Use1343PvP && (Player?.HasStatus(true, StatusID.Stun_1343) ?? false) ||
+                (Use3219PvP && (Player?.HasStatus(true, StatusID.DeepFreeze_3219) ?? false))) ||
+                (Use3022PvP && (Player?.HasStatus(true, StatusID.Halfasleep) ?? false)) ||
+                (Use1348PvP && (Player?.HasStatus(true, StatusID.Sleep_1348) ?? false)) ||
+                (Use1345PvP && (Player?.HasStatus(true, StatusID.Bind_1345) ?? false)) ||
+                (Use1344PvP && (Player?.HasStatus(true, StatusID.Heavy_1344) ?? false)) ||
+                (Use1347PvP && (Player?.HasStatus(true, StatusID.Silence_1347) ?? false)))
+			{
+                if (PurifyPvP.CanUse(out act)) return true;
+            }
+        }
+        if ((Player?.HasStatus(true,(StatusID)1345) ?? false) && PurifyPvP.CanUse(out act)) return true;
 
         if (TryPurify(out act)) return true;
 
@@ -128,15 +144,16 @@ public sealed class BRD_LeliaDefaultPvP : BardRotation
 
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
+            //if (HostileTarget?.CurrentHp<=12000 && EmpyrealArrowPvP.CanUse(out act, usedUp: true)) return true;
+            if ((HostileTarget?.CurrentHp <= 6000 || EmpyrealArrowPvP.Cooldown.CurrentCharges >= EmpyrealCh) &&
+                EmpyrealArrowPvP.CanUse(out act)) return true;
             if (!Player.HasStatus(true, (StatusID)3137) && SNocturne && SilentNocturnePvP.CanUse(out act)) return true;
             if (!Player.HasStatus(true,(StatusID)3137) && TheWardensPaeanPvP.CanUse(out act)) return true;
-            if (EmpyrealArrowPvP.CanUse(out act, usedUp: true) && 
-                EmpyrealArrowPvP.Cooldown.CurrentCharges >= EmpyrealCh) return true;
             if (UseRepelling && RepellingShotPvP.CanUse(out act)) return true;
         }
         //(StatusID)29054 => Guard , (StatusID)1342 => Sprint
-        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) &&
-            SprintPvP.CanUse(out act)) return true;
+        //if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) &&
+        //    SprintPvP.CanUse(out act)) return true;
 
         return base.AttackAbility(out act);
     }
