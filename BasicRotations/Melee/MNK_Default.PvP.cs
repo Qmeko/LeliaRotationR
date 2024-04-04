@@ -1,4 +1,4 @@
-﻿namespace DefaultRotations.Melee;
+namespace DefaultRotations.Melee;
 
 [Rotation("Lelia's PvP", CombatType.PvP, GameVersion = "6.58",
     Description = "")]
@@ -6,7 +6,7 @@
 
 public sealed class MNK_LeliaDefaultPvP : MonkRotation
 { 
-        public static IBaseAction MeteodrivePvP { get; } = new BaseAction((ActionID)29485);
+    public static IBaseAction MeteodrivePvP { get; } = new BaseAction((ActionID)29485);
 
 
     [RotationConfig(CombatType.PvP, Name = "LBを使用します。")]
