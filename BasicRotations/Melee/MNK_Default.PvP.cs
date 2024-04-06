@@ -83,13 +83,14 @@ public sealed class MNK_LeliaDefaultPvP : MonkRotation
             if (ThunderclapPvP.CanUse(out act, usedUp: true) && InCombat) return true;
         }
 
-        //if (PvP_Thunderclap.CanUse(out act, CanUseOption.MustUseEmpty)) return true;
-        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-        //if (PvP_Enlightenment.CanUse(out act, CanUseOption.MustUseEmpty) && InCombat) return true;
-        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
-
-        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && RiddleOfEarthPvP.CanUse(out act, usedUp: true) && InCombat) return true;
-        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && Player.HasStatus(true, StatusID.EarthResonance) && InCombat)
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && 
+			SixsidedStarPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && 
+			RisingPhoenixPvP.CanUse(out act, skipAoeCheck: true) && InCombat) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && 
+			RiddleOfEarthPvP.CanUse(out act, usedUp: true) && InCombat) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && 
+			Player.HasStatus(true, StatusID.EarthResonance) && InCombat)
         {
             if (EarthsReplyPvP.CanUse(out act, usedUp: true)) return true;
         }
