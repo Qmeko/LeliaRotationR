@@ -6,7 +6,7 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 {
 
     public static IBaseAction MarksmansSpitePvP { get; } = new BaseAction((ActionID)29415);
-    //public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
+    public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
 
     [RotationConfig(CombatType.PvP, Name = "LBを使用します。\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
     public bool LBInPvP { get; set; } = false;
@@ -85,12 +85,16 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
-        if (Player.HasStatus(true, StatusID.Overheated_3149))
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && LimitBreakLevel >= 1 && 
+            LBInPvP && HostileTarget?.GetHealthRatio()*100 <= MSValue && 
+            MarksmansSpitePvP.CanUse(out act)) return true;
+
+        if (Player.HasStatus(true, StatusID.Overheated_3149) && (!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
-            if (HeatBlastPvP.CanUse(out act)) return true;
+            if (HeatBlastPvP.CanUse(out act, skipComboCheck: true, skipClippingCheck: true)) return true;
         }
         else if ((Player.HasStatus(true, StatusID.BioblasterPrimed) && HostileTarget?.DistanceToPlayer() <= 12 && BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
-                (Player.HasStatus(true, StatusID.AirAnchorPrimed) && AirAnchorPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
+                (Player.HasStatus(true, StatusID.AirAnchorPrimed) && AirAnchorPvP.CanUse(out act, usedUp: true)) ||
                 (Player.HasStatus(true, StatusID.ChainSawPrimed) && ChainSawPvP.CanUse(out act, usedUp: true, skipAoeCheck: true))) return true;
         else
         { 
@@ -98,18 +102,18 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
             {
                 if (Player.HasStatus(true, StatusID.Overheated_3149)) return false;
 
-                if (HostileTarget && LimitBreakLevel >= 1 && LBInPvP && HostileTarget?.GetHealthRatio() * 100 <= MSValue &&
-                    MarksmansSpitePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-                if (HostileTarget?.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true)) return true;
-
+                if (HostileTarget?.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
             }
         }
 
 
-        if (!Player.HasStatus(true, StatusID.Overheated_3149) && Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-        if (!Player.HasStatus(true, StatusID.Overheated_3149) && BlastChargePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+		if (!Player.HasStatus(true, StatusID.Overheated_3149))
+		{
+        	if (Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true)) return true;
+        	if (BlastChargePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+		}
 
-        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) && SprintPvP.CanUse(out act)) return true;
+        if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) && SprintPvP.CanUse(out act, skipComboCheck: true)) return true;
 
         return base.GeneralGCD(out act);
     }
@@ -126,14 +130,15 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
     protected override bool AttackAbility(out IAction? act)
     {
         //Not working.
-        if (BishopAutoturretPvP.CanUse(out act, usedUp: true, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
-
+        if (HostileTarget && BishopAutoturretPvP.CanUse(out act, usedUp: true)) return true;
+        if (HostileTarget && BishopAutoturretPvP2.CanUse(out act, usedUp: true, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+        
         // Use WildfirePvP if Overheated
         if (Player.HasStatus(true, StatusID.Overheated_3149) && WildfirePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
 
         // Check if BioblasterPvP, AirAnchorPvP, or ChainSawPvP can be used
-        if (InCombat && !Player.HasStatus(true, StatusID.Analysis) &&
-            ((BioblasterPvP.IsInCooldown) || AirAnchorPvP.IsInCooldown || ChainSawPvP.IsInCooldown) &&
+        if (InCombat && !Player.HasStatus(true, StatusID.Analysis) && !Player.HasStatus(true, StatusID.Overheated_3149) &&
+            (BioblasterPvP.Cooldown.CurrentCharges>0 || AirAnchorPvP.Cooldown.CurrentCharges > 0 || ChainSawPvP.Cooldown.CurrentCharges > 0) &&
             AnalysisPvP.CanUse(out act, usedUp: true)) return true;
 
         return base.AttackAbility(out act);
