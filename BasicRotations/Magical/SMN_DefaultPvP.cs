@@ -5,7 +5,7 @@ namespace DefaultRotations.Magical;
 public sealed class SMN_LeliaDefaultPvP : SummonerRotation
 {
     public static IBaseAction SummonBahamutPvP { get; } = new BaseAction((ActionID)29673);
-    public static IBaseAction SummonPhoenixPvP { get; } = new BaseAction((ActionID)29678);
+    public static IBaseAction SummonPhoenixPvP => new BaseAction((ActionID)29678);
 
     [RotationConfig(CombatType.PvP, Name = "LBを使用します。")]
     private bool LBInPvP { get; set; } = false;
@@ -100,12 +100,13 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
     {
         act = null;
 
-
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
         if (!Player.HasStatus(true, StatusID.Guard) && UseRecuperatePvP && Player.GetHealthRatio() * 100 < RCValue &&
             RecuperatePvP.CanUse(out act, usedUp: true)) return true;
 
+        if (LimitBreakLevel >= 1 && SummonBahamutPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+        if (LimitBreakLevel >= 1 && SummonPhoenixPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
 
         if (LimitBreakLevel >= 1 && (!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && LBInPvP &&
                 HostileTarget?.GetHealthRatio() * 100 <= SBValue && Player.GetHealthRatio() * 100 >= SPValue)
@@ -123,6 +124,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
         {
             if (CrimsonCyclonePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         }
+        
 
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) &&
                 SlipstreamPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
