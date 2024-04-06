@@ -2,8 +2,8 @@
     <PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Authors>Lelia</Authors>
-		<Version>4.0.4.40010</Version>
+		<Authors>LTS</Authors>
+		<Version>6.5.8.22</Version>
 		<PlatformTarget>x64</PlatformTarget>
 		<Platforms>AnyCPU</Platforms>
 		<Nullable>enable</Nullable>
