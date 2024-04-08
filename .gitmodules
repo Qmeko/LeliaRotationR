@@ -1,6 +1,4 @@
 [submodule "RotationSolver"]
 	path = RotationSolver
 	url = https://github.com/FFXIV-CombatReborn/RotationSolverReborn
-[submodule "RotationSolverReborn"]
-	path = RotationSolverReborn
-	url = https://github.com/FFXIV-CombatReborn/RotationSolverReborn.git
+
