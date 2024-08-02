@@ -13,3 +13,4 @@ https://github.com/FFXIV-CombatReborn/LTSDefaults/releases/latest/download/Basic
 ```
 https://github.com/FFXIV-CombatReborn/LTSDefaults/releases/latest/download/BasicRotations.pdb
 ```
+![image](https://github.com/user-attachments/assets/654702b8-e043-4e14-8c67-30a59cf81674)
