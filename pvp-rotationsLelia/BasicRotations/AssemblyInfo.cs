@@ -1,0 +1,1 @@
+﻿[assembly: AssemblyLink(Donate = "", UserName = "spaceelysian", Repository = "pvp-rotations")]
