@@ -3,7 +3,7 @@
 	  <DalamudLibPath>$(AppData)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="RotationSolverReborn.Basic" Version="7.0.5.11" />
+	  <ProjectReference Include="..\RotationSolverReborn\RotationSolver.Basic\RotationSolver.Basic.csproj" />
   </ItemGroup>
   <ItemGroup>
 	  <Reference Include="Dalamud">
@@ -35,7 +35,6 @@
 		  <Private>False</Private>
 	  </Reference>
 	  <Using Include="Dalamud.Game.ClientState.JobGauge.Enums" />
-	  <Using Include="Dalamud.Game.ClientState.Objects" />
 	  <Using Include="Dalamud.Game.ClientState.Objects.Types" />
 	  <Using Include="Dalamud.Interface" />
 	  <Using Include="ImGuiNET" />

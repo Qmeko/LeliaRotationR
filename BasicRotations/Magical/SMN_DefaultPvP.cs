@@ -1,11 +1,12 @@
-namespace DefaultRotations.Magical;
+﻿namespace DefaultRotations.Magical;
 
 [Rotation("Lelia's PvP", CombatType.PvP, GameVersion = "6.58")]
 [SourceCode(Path = "main/DefaultRotations/Magical/SMN_DefaultPvP.cs")]
+[Api(2)]
 public sealed class SMN_LeliaDefaultPvP : SummonerRotation
 {
-    public static IBaseAction SummonBahamutPvP { get; } = new BaseAction((ActionID)29673);
-    public static IBaseAction SummonPhoenixPvP => new BaseAction((ActionID)29678);
+    public static IBaseAction SummonBahamutPvP = new BaseAction((ActionID)29673);
+    public static IBaseAction SummonPhoenixPvP = new BaseAction((ActionID)29678);
 
     [RotationConfig(CombatType.PvP, Name = "LBを使用します。")]
     private bool LBInPvP { get; set; } = false;
@@ -89,7 +90,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
         {
             if (status.Value && Player.HasStatus(true, (StatusID)status.Key))
             {
-                return PurifyPvP.CanUse(out action, skipClippingCheck: true);
+                return PurifyPvP.CanUse(out action);
             }
         }
 
@@ -119,12 +120,14 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
             if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && SummonPhoenixPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
         }
 
-        //if (CrimsonStrikePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
-        if (CCPvP && HostileTarget?.GetHealthRatio() * 100 < CrimsonValue)
+        //if (CrimsonCyclonePvP.CanUse(out act, skipAoeCheck: true)) return true;
+        if (CCPvP && HostileTarget?.GetHealthRatio() < CrimsonValue/100)
         {
-            if (CrimsonCyclonePvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
+            if (CrimsonCyclonePvP.CanUse(out act, skipAoeCheck: true)) return true;
+            //if (CrimsonCyclonePvP.Cooldown.IsCoolingDown && CrimsonStrikePvP.CanUse(out act, skipAoeCheck: true)) return true;
+            //if (CrimsonCyclonePvP.IsEnabled && CrimsonStrikePvP.CanUse(out act, skipAoeCheck: true)) return true;
         }
-        
+
 
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) &&
                 SlipstreamPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) return true;
@@ -155,7 +158,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
         return base.EmergencyAbility(nextGCD, out act);
     }
 
-    protected override bool AttackAbility(out IAction? act)
+    protected override bool AttackAbility(IAction nextGCD, out IAction? act)
     {
         if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
@@ -166,7 +169,7 @@ public sealed class SMN_LeliaDefaultPvP : SummonerRotation
 
         }
 
-        return base.AttackAbility(out act);
+        return base.AttackAbility(nextGCD, out act);
     }
 
 

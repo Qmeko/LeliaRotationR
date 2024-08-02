@@ -1,55 +1,58 @@
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+
 namespace DefaultRotations.Ranged;
 
 [Rotation("Lelia's PvP", CombatType.PvP, GameVersion = "6.58")]
 [SourceCode(Path = "main/DefaultRotations/Ranged/MCH_Default.PvP.cs")]
+[Api(3)]
 public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 {
 
-    public static IBaseAction MarksmansSpitePvP { get; } = new BaseAction((ActionID)29415);
-    public static IBaseAction BishopAutoturretPvP2 { get; } = new BaseAction((ActionID)29412);
-
-    [RotationConfig(CombatType.PvP, Name = "LBã‚’ä½¿ç”¨ã—ã¾ã™ã€‚\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
+    public static IBaseAction MarksmansSpitePvP => new BaseAction((ActionID)29415);
+    //public static IBaseAction BishopAutoturretPvP => new BaseAction((ActionID)29412);
+    
+    [RotationConfig(CombatType.PvP, Name = "LB‚ðŽg—p‚µ‚Ü‚·B\nUse Limit Break (Note: RSR cannot predict the future, and this has a cast time.")]
     public bool LBInPvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "LB:é­”å¼¾ã®å°„æ‰‹ã‚’è¡Œã†ãŸã‚ã«å¿…è¦ãªã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®HP%%ã¯ï¼Ÿ\nThe target HP%% required to perform LB:Marksman's Spite is")]
+    [RotationConfig(CombatType.PvP, Name = "LB:–‚’e‚ÌŽËŽè‚ðs‚¤‚½‚ß‚É•K—v‚Èƒ^[ƒQƒbƒg‚ÌHP%%‚ÍH\nThe target HP%% required to perform LB:Marksman's Spite is")]
     public int MSValue { get; set; } = 45;
 
-    [RotationConfig(CombatType.PvP, Name = "ã‚¹ãƒ—ãƒªãƒ³ãƒˆã‚’ä½¿ã„ã¾ã™ã€‚\nSprint")]
+    [RotationConfig(CombatType.PvP, Name = "ƒXƒvƒŠƒ“ƒg‚ðŽg‚¢‚Ü‚·B\nSprint")]
     public bool UseSprintPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã„ã¾ã™ã€‚\nRecuperate")]
+    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ðŽg‚¢‚Ü‚·B\nRecuperate")]
     public bool UseRecuperatePvP { get; set; } = false;
 
     [Range(1, 100, ConfigUnitType.Percent, 1)]
-    [RotationConfig(CombatType.PvP, Name = "å¿«æ°—ã‚’ä½¿ã†ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®HP%%ã¯ï¼Ÿ\nRecuperateHP%%?")]
+    [RotationConfig(CombatType.PvP, Name = "‰õ‹C‚ðŽg‚¤ƒvƒŒƒCƒ„[‚ÌHP%%‚ÍH\nRecuperateHP%%?")]
     public int RCValue { get; set; } = 75;
 
-    [RotationConfig(CombatType.PvP, Name = "æµ„åŒ–ã‚’ä½¿ã„ã¾ã™ã€‚\nUse Purify")]
+    [RotationConfig(CombatType.PvP, Name = "ò‰»‚ðŽg‚¢‚Ü‚·B\nUse Purify")]
     public bool UsePurifyPvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ã‚¹ã‚¿ãƒ³\nUse Purify on Stun")]
+    [RotationConfig(CombatType.PvP, Name = "ƒXƒ^ƒ“\nUse Purify on Stun")]
     public bool Use1343PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "æ°·çµ\nUse Purify on DeepFreeze")]
+    [RotationConfig(CombatType.PvP, Name = "•XŒ‹\nUse Purify on DeepFreeze")]
     public bool Use3219PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "å¾ã€…ã«ç¡çœ \nUse Purify on HalfAsleep")]
+    [RotationConfig(CombatType.PvP, Name = "™X‚É‡–°\nUse Purify on HalfAsleep")]
     public bool Use3022PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ç¡çœ \nUse Purify on Sleep")]
+    [RotationConfig(CombatType.PvP, Name = "‡–°\nUse Purify on Sleep")]
     public bool Use1348PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ãƒã‚¤ãƒ³ãƒ‰\nUse Purify on Bind")]
+    [RotationConfig(CombatType.PvP, Name = "ƒoƒCƒ“ƒh\nUse Purify on Bind")]
     public bool Use1345PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "ãƒ˜ãƒ´ã‚£\nUse Purify on Heavy")]
+    [RotationConfig(CombatType.PvP, Name = "ƒwƒ”ƒB\nUse Purify on Heavy")]
     public bool Use1344PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "æ²ˆé»™\nUse Purify on Silence")]
+    [RotationConfig(CombatType.PvP, Name = "’¾–Ù\nUse Purify on Silence")]
     public bool Use1347PvP { get; set; } = false;
 
-    [RotationConfig(CombatType.PvP, Name = "è‡ªåˆ†ãŒé˜²å¾¡ä¸­ã¯æ”»æ’ƒã‚’ä¸­æ­¢ã—ã¾ã™ã€‚\nStop attacking while in Guard.")]
+    [RotationConfig(CombatType.PvP, Name = "Ž©•ª‚ª–hŒä’†‚ÍUŒ‚‚ð’†Ž~‚µ‚Ü‚·B\nStop attacking while in Guard.")]
     public bool GuardCancel { get; set; } = false;
 
 
@@ -73,7 +76,7 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
         {
             if (status.Value && Player.HasStatus(true, (StatusID)status.Key))
             {
-                return PurifyPvP.CanUse(out action, skipClippingCheck: true);
+                return PurifyPvP.CanUse(out action);
             }
         }
 
@@ -85,13 +88,20 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
         act = null;
         if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
 
-        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && LimitBreakLevel >= 1 && 
-            LBInPvP && HostileTarget?.GetHealthRatio()*100 <= MSValue && 
+        //if ((((sbyte)LimitBreakLevel>=1) && SprintPvP.CanUse(out act))) return true;
+        if ((!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && (LimitBreakLevel == 1) &&
+            LBInPvP && HostileTarget?.GetHealthRatio() * 100 <= MSValue &&
             MarksmansSpitePvP.CanUse(out act)) return true;
+        //if(LBInPvP && (LimitBreakLevel >= 1))
+        //{
+        //    if ((HostileTarget?.HasStatus(true, StatusID.Guard) ?? false) && 
+        //        (HostileTarget?.GetHealthRatio() * 100 < MSValue) &&
+        //        (MarksmansSpitePvP.CanUse(out act))) return true;
+        //}
 
         if (Player.HasStatus(true, StatusID.Overheated_3149) && (!HostileTarget?.HasStatus(true, StatusID.Guard) ?? false))
         {
-            if (HeatBlastPvP.CanUse(out act, skipComboCheck: true, skipClippingCheck: true)) return true;
+            if (HeatBlastPvP.CanUse(out act, skipComboCheck: true)) return true;
         }
         else if ((Player.HasStatus(true, StatusID.BioblasterPrimed) && HostileTarget?.DistanceToPlayer() <= 12 && BioblasterPvP.CanUse(out act, usedUp: true, skipAoeCheck: true)) ||
                 (Player.HasStatus(true, StatusID.AirAnchorPrimed) && AirAnchorPvP.CanUse(out act, usedUp: true)) ||
@@ -102,7 +112,7 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
             {
                 if (Player.HasStatus(true, StatusID.Overheated_3149)) return false;
 
-                if (HostileTarget?.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+                if (HostileTarget?.DistanceToPlayer() <= 12 && ScattergunPvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true)) return true;
             }
         }
 
@@ -110,7 +120,7 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 		if (!Player.HasStatus(true, StatusID.Overheated_3149))
 		{
         	if (Player.HasStatus(true, StatusID.DrillPrimed) && DrillPvP.CanUse(out act, usedUp: true)) return true;
-        	if (BlastChargePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+        	if (BlastChargePvP.CanUse(out act, skipCastingCheck: true)) return true;
 		}
 
         if (!Player.HasStatus(true, StatusID.Guard) && UseSprintPvP && !Player.HasStatus(true, StatusID.Sprint) && SprintPvP.CanUse(out act, skipComboCheck: true)) return true;
@@ -127,20 +137,22 @@ public sealed class MCH_LeliaDefaultPvP : MachinistRotation
         return base.EmergencyAbility(nextGCD, out act);
     }
 
-    protected override bool AttackAbility(out IAction? act)
+    protected override bool AttackAbility(IAction nextGCD, out IAction? act)
     {
-        //Not working.
-        if (HostileTarget && BishopAutoturretPvP.CanUse(out act, usedUp: true)) return true;
-        if (HostileTarget && BishopAutoturretPvP2.CanUse(out act, usedUp: true, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
-        
+        act = null;
+        if (GuardCancel && Player.HasStatus(true, StatusID.Guard)) return false;
+
+        if (BishopAutoturretPvP.CanUse(out act, skipAoeCheck: true)) return true;
+
         // Use WildfirePvP if Overheated
-        if (Player.HasStatus(true, StatusID.Overheated_3149) && WildfirePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+        //if (Player.HasStatus(true, StatusID.Overheated_3149) && WildfirePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true, skipClippingCheck: true)) return true;
+        if (Player.HasStatus(true, StatusID.Overheated_3149) && WildfirePvP.CanUse(out act, skipAoeCheck: true, skipComboCheck: true)) return true;
 
         // Check if BioblasterPvP, AirAnchorPvP, or ChainSawPvP can be used
         if (InCombat && !Player.HasStatus(true, StatusID.Analysis) && !Player.HasStatus(true, StatusID.Overheated_3149) &&
             (BioblasterPvP.Cooldown.CurrentCharges>0 || AirAnchorPvP.Cooldown.CurrentCharges > 0 || ChainSawPvP.Cooldown.CurrentCharges > 0) &&
             AnalysisPvP.CanUse(out act, usedUp: true)) return true;
 
-        return base.AttackAbility(out act);
+        return base.AttackAbility(nextGCD, out act);
     }
 }
