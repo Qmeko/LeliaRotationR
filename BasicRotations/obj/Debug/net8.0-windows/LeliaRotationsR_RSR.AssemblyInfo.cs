@@ -13,11 +13,11 @@ using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Lelia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("7.0.3.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("7.0.3.1+0275dbcc570aa225756a43570f62914839063cc8")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("7.0.5.5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("7.0.5.5+0275dbcc570aa225756a43570f62914839063cc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeliaRotationsR_RSR")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeliaRotationsR_RSR")]
-[assembly: System.Reflection.AssemblyVersionAttribute("7.0.3.1")]
+[assembly: System.Reflection.AssemblyVersionAttribute("7.0.5.5")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 

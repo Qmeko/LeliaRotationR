@@ -5,7 +5,7 @@
   },
   "projects": {
     "D:\\GitHub\\LeliaRotations - 05 - 4.0.0.0 - Spec2\\BasicRotations\\LeliaRotationsR_RSR.csproj": {
-      "version": "7.0.3.1",
+      "version": "7.0.5.5",
       "restore": {
         "projectUniqueName": "D:\\GitHub\\LeliaRotations - 05 - 4.0.0.0 - Spec2\\BasicRotations\\LeliaRotationsR_RSR.csproj",
         "projectName": "LeliaRotationsR_RSR",
@@ -204,7 +204,11 @@
           "dependencies": {
             "Svg": {
               "target": "Package",
-              "version": "[3.4.4, )"
+              "version": "[3.4.7, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             }
           },
           "imports": [
@@ -277,7 +281,7 @@
           "dependencies": {
             "Microsoft.CodeAnalysis.CSharp": {
               "target": "Package",
-              "version": "[4.8.0, )"
+              "version": "[4.10.0, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",
