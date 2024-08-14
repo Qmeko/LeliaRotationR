@@ -5,7 +5,7 @@ namespace DefaultRotations.Ranged;
 [SourceCode(Path = "main/DefaultRotations/Ranged/BRD_Default.cs")]
 [Api(3)]
 
-public sealed class BRD_Default : BardRotation
+public sealed class BRD_DefaultLelia : BardRotation
 {
     #region Config Options
     [RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
@@ -171,9 +171,10 @@ public sealed class BRD_Default : BardRotation
             if (BloodletterPvE.CanUse(out act, usedUp: true)) return true;
         }
 
-        //if (BloodletterLogic(out act)) return true;
+        if (RagingStrikesPvE.CanUse(out act)) return true;
+            //if (BloodletterLogic(out act)) return true;
 
-        return base.AttackAbility(nextGCD, out act);
+            return base.AttackAbility(nextGCD, out act);
     }
     #endregion
 

@@ -5,6 +5,7 @@ namespace DefaultRotations.Tank;
 [Api(3)]
 public sealed class DRK_DefaultLelia : DarkKnightRotation
 {
+
     #region Config Options
     [RotationConfig(CombatType.PvE, Name = "Keep at least 3000 MP")]
     public bool TheBlackestNight { get; set; } = true;
@@ -86,7 +87,6 @@ public sealed class DRK_DefaultLelia : DarkKnightRotation
     protected override bool DefenseSingleAbility(IAction nextGCD, out IAction? act)
     {
         act = null;
-
         if (Player.HasStatus(true, StatusID.BlackestNight)) return false;
 
         //10
@@ -109,6 +109,7 @@ public sealed class DRK_DefaultLelia : DarkKnightRotation
 
     protected override bool AttackAbility(IAction nextGCD, out IAction? act)
     {
+
         if (CheckDarkSide)
         {
             if (FloodOfDarknessPvE.CanUse(out act)) return true;
@@ -163,6 +164,8 @@ public sealed class DRK_DefaultLelia : DarkKnightRotation
     #region GCD Logic
     protected override bool GeneralGCD(out IAction? act)
     {
+        if (ScarletDeliriumPvE.CanUse(out act,usedUp:true, skipComboCheck: true)) return true;
+
         //Use Blood
         if (UseBlood)
         {
