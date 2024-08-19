@@ -5,7 +5,7 @@
   },
   "projects": {
     "D:\\GitHub\\LeliaRotations - 05 - 4.0.0.0 - Spec2\\BasicRotations\\LeliaRotationsR.csproj": {
-      "version": "7.0.5.15",
+      "version": "7.0.5.18",
       "restore": {
         "projectUniqueName": "D:\\GitHub\\LeliaRotations - 05 - 4.0.0.0 - Spec2\\BasicRotations\\LeliaRotationsR.csproj",
         "projectName": "LeliaRotationsR",
@@ -54,7 +54,7 @@
           "dependencies": {
             "RotationSolverReborn.Basic": {
               "target": "Package",
-              "version": "[7.0.5.17, )"
+              "version": "[7.0.5.19, )"
             }
           },
           "imports": [

@@ -33,7 +33,7 @@
           }
         }
       },
-      "RotationSolverReborn.Basic/7.0.5.17": {
+      "RotationSolverReborn.Basic/7.0.5.19": {
         "type": "package",
         "dependencies": {
           "Svg": "3.4.7",
@@ -142,10 +142,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "RotationSolverReborn.Basic/7.0.5.17": {
-      "sha512": "lt+eaVLjmoB0FPCnWCGT6LbWpGbkG7DQuUM5LtvpkCGjl3Cr/xj2DmaytmmW3ItK7Hihf+MlzFa0wA6PCPMm9Q==",
+    "RotationSolverReborn.Basic/7.0.5.19": {
+      "sha512": "75Q0V4o5jdeD0UDsJ1PnXGIF/G/2RiMUxoJM45ZAx0Wuut7Nfly3yvTb0GlJzflaZz3DtRXFbT1jSfkH1hFV8w==",
       "type": "package",
-      "path": "rotationsolverreborn.basic/7.0.5.17",
+      "path": "rotationsolverreborn.basic/7.0.5.19",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -154,7 +154,7 @@
         "README.md",
         "lib/net8.0-windows7.0/RotationSolver.Basic.dll",
         "lib/net8.0-windows7.0/RotationSolver.Basic.xml",
-        "rotationsolverreborn.basic.7.0.5.17.nupkg.sha512",
+        "rotationsolverreborn.basic.7.0.5.19.nupkg.sha512",
         "rotationsolverreborn.basic.nuspec"
       ]
     },
@@ -229,7 +229,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "RotationSolverReborn.Basic >= 7.0.5.17"
+      "RotationSolverReborn.Basic >= 7.0.5.19"
     ]
   },
   "packageFolders": {
@@ -237,7 +237,7 @@
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "7.0.5.15",
+    "version": "7.0.5.18",
     "restore": {
       "projectUniqueName": "D:\\GitHub\\LeliaRotations - 05 - 4.0.0.0 - Spec2\\BasicRotations\\LeliaRotationsR.csproj",
       "projectName": "LeliaRotationsR",
@@ -286,7 +286,7 @@
         "dependencies": {
           "RotationSolverReborn.Basic": {
             "target": "Package",
-            "version": "[7.0.5.17, )"
+            "version": "[7.0.5.19, )"
           }
         },
         "imports": [
