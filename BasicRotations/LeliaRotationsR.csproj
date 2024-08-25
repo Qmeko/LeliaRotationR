@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <DalamudLibPath>$(AppData)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-	  <Version>7.0.5.18</Version>
+	  <Version>7.0.5.24</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Magical\SMN_Default.cs" />
@@ -10,7 +10,7 @@
     <Compile Remove="Ranged\MCH_Default.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RotationSolverReborn.Basic" Version="7.0.5.19" />
+    <PackageReference Include="RotationSolverReborn.Basic" Version="7.0.5.30" />
   </ItemGroup>
   <ItemGroup>
 	  <Reference Include="Dalamud">

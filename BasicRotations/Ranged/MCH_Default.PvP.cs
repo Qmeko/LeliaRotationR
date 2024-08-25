@@ -1,10 +1,16 @@
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using System.ComponentModel;
 
 namespace DefaultRotations.Ranged;
+/// <summary>
+/// The level of the LB.
+/// </summary>
 
 [Rotation("Lelia's PvP", CombatType.PvP, GameVersion = "6.58")]
 [SourceCode(Path = "main/DefaultRotations/Ranged/MCH_Default.PvP.cs")]
 [Api(3)]
+
+
 public sealed class MCH_LeliaDefaultPvP : MachinistRotation
 {
 

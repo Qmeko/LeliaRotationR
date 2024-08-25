@@ -3,6 +3,7 @@
 namespace DefaultRotations.Duty;
 
 [Rotation("Bozja Default",  CombatType.PvE)]
+
 internal class BozjaDefault : BozjaRotation
 {
     public override bool DefenseSingleGCD(out IAction? act)

@@ -1,10 +1,14 @@
-﻿namespace DefaultRotations.Tank;
+﻿using RotationSolver.Basic.Rotations.Duties;
+
+namespace DefaultRotations.Tank;
 
 [Rotation("Lelia's Default", CombatType.PvE, GameVersion = "7.00")]
 [SourceCode(Path = "main/DefaultRotations/Tank/PLD_Default.cs")]
 [Api(3)]
 public class PLD_DefaultLelia : PaladinRotation
 {
+    public static IBaseAction VrilPvE_26 => new BaseAction((ActionID)26);
+
     #region Config Options
     [RotationConfig(CombatType.PvE, Name = "Use Divine Veil at 15 seconds remaining on Countdown")]
     public bool UseDivineVeilPre { get; set; } = false;
@@ -33,6 +37,7 @@ public class PLD_DefaultLelia : PaladinRotation
 
     private const ActionID ConfiPvEActionId = (ActionID)16459;
     private IBaseAction ConfiPvE = new BaseAction(ConfiPvEActionId);
+
     #endregion
 
     #region Countdown Logic
@@ -67,7 +72,7 @@ public class PLD_DefaultLelia : PaladinRotation
         if (!Player.HasStatus(true, StatusID.HallowedGround))
         {
             // If Bulwark can be used, use it and return true.
-            if (BulwarkPvE.CanUse(out act, skipAoeCheck: true)) return true;
+            if (InCombat && BulwarkPvE.CanUse(out act, skipAoeCheck: true)) return true;
 
             // If Oath can be used, use it and return true.
             if (UseOath(out act, true)) return true;
@@ -107,7 +112,7 @@ public class PLD_DefaultLelia : PaladinRotation
         if (!Player.HasStatus(true, StatusID.HallowedGround))
         {
             // If Bulwark can be used, use it and return true.
-            if (BulwarkPvE.CanUse(out act, skipAoeCheck: true)) return true;
+            if (InCombat && BulwarkPvE.CanUse(out act, skipAoeCheck: true)) return true;
 
             // If Oath can be used, use it and return true.
             if (UseOath(out act, true)) return true;

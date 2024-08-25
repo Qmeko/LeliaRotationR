@@ -117,7 +117,7 @@ public sealed class GNB_DefaultLelia : GunbreakerRotation
 
         if (IsLastGCD(false, NobleBloodPvE) && LionHeartPvE.CanUse(out act, skipComboCheck: true)) return true;
         if (IsLastGCD(false, ReignOfBeastsPvE) && NobleBloodPvE.CanUse(out act, skipComboCheck: true)) return true;
-        if (IsLastAction(false, EyeGougePvE) && ReignOfBeastsPvE.CanUse(out act)) return true;
+        if (IsLastAction(false, EyeGougePvE) && ReignOfBeastsPvE.CanUse(out act,skipAoeCheck: true)) return true;
 
         if (Player.HasStatus(true, StatusID.NoMercy) && SonicBreakPvE.CanUse(out act)) return true;
         

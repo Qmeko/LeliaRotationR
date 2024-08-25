@@ -1,11 +1,10 @@
 namespace DefaultRotations.Ranged;
 
-[Rotation("Lelia's Default", CombatType.PvE, GameVersion = "6.58",
+[Rotation("Lelia's Default2", CombatType.PvE, GameVersion = "7.05",
     Description = "Please make sure that the three song times add up to 120 seconds, Wanderers default first song for now.")]
 [SourceCode(Path = "main/DefaultRotations/Ranged/BRD_Default.cs")]
 [Api(3)]
-
-public sealed class BRD_DefaultLelia : BardRotation
+public sealed class BRD_DefaultLelia2 : BardRotation
 {
     #region Config Options
     [RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
@@ -17,11 +16,11 @@ public sealed class BRD_DefaultLelia : BardRotation
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
     [RotationConfig(CombatType.PvE, Name = "Mage's Ballad Uptime")]
-    public float MAGETime { get; set; } = 40;
+    public float MAGETime { get; set; } = 34;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
     [RotationConfig(CombatType.PvE, Name = "Army's Paeon Uptime")]
-    public float ARMYTime { get; set; } = 37;
+    public float ARMYTime { get; set; } = 43;
 
     [RotationConfig(CombatType.PvE, Name = "First Song")]
     private Song FirstSong { get; set; } = Song.WANDERER;
@@ -74,21 +73,25 @@ public sealed class BRD_DefaultLelia : BardRotation
             if (ArmysPaeonPvE.CanUse(out act)) return true;
         }
 
+
         if (IsBurst && Song != Song.NONE && MagesBalladPvE.EnoughLevel)
         {
-            if (RagingStrikesPvE.CanUse(out act))
+            if (BloodletterPvE.CanUse(out act)) return true;
+
+            if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true)) return true;
+            if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true)) return true;
+            if (RagingStrikesPvE.CanUse(out act)) return true;
+
+            if (RagingStrikesPvE.CanUse(out act, isLastAbility: true))
             {
                 if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
                 if (!BindWANDEnough) return true;
             }
 
-
-
             if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true))
-
-
             {
-                if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) return true;
+                if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1))
+                return true;
             }
 
             if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
@@ -151,7 +154,7 @@ public sealed class BRD_DefaultLelia : BardRotation
             if (BloodletterPvE.CanUse(out act)) return true;
         }
 
-        // Prevents Bloodletter bumpcapping when MAGE is the stong due to Repetoire procs
+        // Prevents Bloodletter bumpcapping when MAGE is the song due to Repetoire procs
         if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && Song == Song.MAGE)
         {
             if (HeartbreakShotPvE.CanUse(out act, usedUp: true)) return true;
@@ -171,12 +174,10 @@ public sealed class BRD_DefaultLelia : BardRotation
             if (BloodletterPvE.CanUse(out act, usedUp: true)) return true;
         }
 
-//Up
-        if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
-        if (RagingStrikesPvE.CanUse(out act, usedUp: true)) return true;
-            //if (BloodletterLogic(out act)) return true;
-//UpEnd
-            return base.AttackAbility(nextGCD, out act);
+
+        //if (BloodletterLogic(out act)) return true;
+
+        return base.AttackAbility(nextGCD, out act);
     }
     #endregion
 
