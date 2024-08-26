@@ -173,7 +173,11 @@ public sealed class BRD_DefaultLelia3 : BardRotation
         }
 
 
+//Up
+        if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
+        if (InCombat && RagingStrikesPvE.CanUse(out act)) return true;
         //if (BloodletterLogic(out act)) return true;
+//UpEnd
 
         return base.AttackAbility(nextGCD, out act);
     }

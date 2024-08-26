@@ -1,6 +1,6 @@
 namespace DefaultRotations.Ranged;
 
-[Rotation("Lelia's Default", CombatType.PvE, GameVersion = "6.58",
+[Rotation("Lelia's Default1", CombatType.PvE, GameVersion = "6.58",
     Description = "Please make sure that the three song times add up to 120 seconds, Wanderers default first song for now.")]
 [SourceCode(Path = "main/DefaultRotations/Ranged/BRD_Default.cs")]
 [Api(3)]
