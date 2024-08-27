@@ -172,8 +172,14 @@ public sealed class BRD_DefaultLelia3 : BardRotation
             if (BloodletterPvE.CanUse(out act, usedUp: true)) return true;
         }
 
-
+//Up
+        if (InCombat && Player.Level < 50)
+        {
+            if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
+            if (RagingStrikesPvE.CanUse(out act)) return true;
+        }
         //if (BloodletterLogic(out act)) return true;
+//UpEnd
 
         return base.AttackAbility(nextGCD, out act);
     }
@@ -185,8 +191,8 @@ public sealed class BRD_DefaultLelia3 : BardRotation
         if (IronJawsPvE.CanUse(out act)) return true;
         if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
         {
-            if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) &&
-    (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
+            if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && 
+                (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
             {
                 if (Player.HasStatus(true, StatusID.RagingStrikes) &&
                     Player.WillStatusEndGCD(1, 0, true, StatusID.RagingStrikes))
