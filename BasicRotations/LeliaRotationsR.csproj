@@ -1,11 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <DalamudLibPath>$(AppData)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-	  <Version>7.0.5.25</Version>
+	  <Version>7.0.5.27</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Magical\SMN_Default.cs" />
     <Compile Remove="Magical\SMN_Default2.cs" />
+    <Compile Remove="Ranged\BRD_DefaultLelia2.cs" />
     <Compile Remove="Ranged\BRD_DefaultSloth.cs" />
     <Compile Remove="Ranged\MCH_Default.cs" />
   </ItemGroup>
