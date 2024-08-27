@@ -1,26 +1,26 @@
 namespace DefaultRotations.Ranged;
 
-[Rotation("Lelia's Default1", CombatType.PvE, GameVersion = "6.58",
+[Rotation("Lelia's Default1", CombatType.PvE, GameVersion = "7.05",
     Description = "Please make sure that the three song times add up to 120 seconds, Wanderers default first song for now.")]
 [SourceCode(Path = "main/DefaultRotations/Ranged/BRD_Default.cs")]
 [Api(3)]
-
-public sealed class BRD_DefaultLelia : BardRotation
+public sealed class BRD_DefaultLelia1 : BardRotation
 {
     #region Config Options
-    [RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
+    //[RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
+    [RotationConfig(CombatType.PvE, Name = "猛者をメヌエット時に使用する。")]
     public bool BindWAND { get; set; } = false;
 
     [Range(1, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Wanderer's Minuet Uptime")]
+    [RotationConfig(CombatType.PvE, Name = "旅神のメヌエットの使用時間")]
     public float WANDTime { get; set; } = 43;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Mage's Ballad Uptime")]
+    [RotationConfig(CombatType.PvE, Name = "賢人のバラードの使用時間")]
     public float MAGETime { get; set; } = 40;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Army's Paeon Uptime")]
+    [RotationConfig(CombatType.PvE, Name = "軍神のパイオンの使用時間")]
     public float ARMYTime { get; set; } = 37;
 
     [RotationConfig(CombatType.PvE, Name = "First Song")]
@@ -74,30 +74,32 @@ public sealed class BRD_DefaultLelia : BardRotation
             if (ArmysPaeonPvE.CanUse(out act)) return true;
         }
 
+
         if (IsBurst && Song != Song.NONE && MagesBalladPvE.EnoughLevel)
         {
-            if (RagingStrikesPvE.CanUse(out act))
+            if (BloodletterPvE.CanUse(out act)) return true;
+
+            //if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true)) return true;
+            //if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true)) return true;
+            //if (RagingStrikesPvE.CanUse(out act)) return true;
+
+            if (RadiantFinalePvE.CanUse(out act) && Song == Song.WANDERER && (!BattleVoicePvE.Cooldown.IsCoolingDown || BattleVoicePvE.Cooldown.ElapsedAfter(118)))
             {
                 if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
                 if (!BindWANDEnough) return true;
             }
 
-
-
-            if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true))
-
-
-            {
-                if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) return true;
-            }
-
             if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
             {
-                if (nextGCD.IsTheSameTo(true, RadiantFinalePvE)) return true;
+                if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
+            }
 
+            if (RagingStrikesPvE.CanUse(out act))
+            {
+                if (nextGCD.IsTheSameTo(true, BattleVoicePvE)) return true;
                 if (nextGCD.IsTheSameTo(true, RadiantEncorePvE)) return true;
 
-                if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) return true;
+                if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
             }
         }
 
@@ -151,7 +153,7 @@ public sealed class BRD_DefaultLelia : BardRotation
             if (BloodletterPvE.CanUse(out act)) return true;
         }
 
-        // Prevents Bloodletter bumpcapping when MAGE is the stong due to Repetoire procs
+        // Prevents Bloodletter bumpcapping when MAGE is the song due to Repetoire procs
         if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && Song == Song.MAGE)
         {
             if (HeartbreakShotPvE.CanUse(out act, usedUp: true)) return true;
@@ -172,11 +174,15 @@ public sealed class BRD_DefaultLelia : BardRotation
         }
 
 //Up
-        if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
-        if (RagingStrikesPvE.CanUse(out act, usedUp: true)) return true;
-            //if (BloodletterLogic(out act)) return true;
+        if (InCombat && Player.Level < 50)
+        {
+            if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
+            if (RagingStrikesPvE.CanUse(out act)) return true;
+        }
+        //if (BloodletterLogic(out act)) return true;
 //UpEnd
-            return base.AttackAbility(nextGCD, out act);
+
+        return base.AttackAbility(nextGCD, out act);
     }
     #endregion
 
@@ -186,13 +192,27 @@ public sealed class BRD_DefaultLelia : BardRotation
         if (IronJawsPvE.CanUse(out act)) return true;
         if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
         {
-            if (Player.HasStatus(true, StatusID.RagingStrikes) && Player.WillStatusEndGCD(1, 0, true, StatusID.RagingStrikes)) return true;
+            if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && 
+                (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
+            {
+                if (Player.HasStatus(true, StatusID.RagingStrikes) &&
+                    Player.WillStatusEndGCD(1, 0, true, StatusID.RagingStrikes))
+                {
+                    return true;
+                }
+                else if (Player.HasStatus(true, StatusID.RadiantFinale) &&
+                         Player.WillStatusEndGCD(1, 0, true, StatusID.RadiantFinale))
+                {
+                    return true;
+                }
+            }
+
         }
 
         if (ResonantArrowPvE.CanUse(out act)) return true;
 
         if (CanUseApexArrow(out act)) return true;
-        if (RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
+        if (Player.HasStatus(true, StatusID.RagingStrikes) && RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
         if (BlastArrowPvE.CanUse(out act))
         {
             if (!Player.HasStatus(true, StatusID.RagingStrikes)) return true;
