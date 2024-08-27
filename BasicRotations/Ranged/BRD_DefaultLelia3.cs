@@ -8,19 +8,20 @@ public sealed class BRD_DefaultLelia3 : BardRotation
 {
     #region Config Options
     [RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
+    //[RotationConfig(CombatType.PvE, Name = "猛者をメヌエット時に使用する。")]
     public bool BindWAND { get; set; } = false;
 
     [Range(1, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Wanderer's Minuet Uptime")]
+    [RotationConfig(CombatType.PvE, Name = "旅神のメヌエットの使用時間")]
     public float WANDTime { get; set; } = 43;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Mage's Ballad Uptime")]
-    public float MAGETime { get; set; } = 34;
+    [RotationConfig(CombatType.PvE, Name = "賢人のバラードの使用時間")]
+    public float MAGETime { get; set; } = 40;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Army's Paeon Uptime")]
-    public float ARMYTime { get; set; } = 43;
+    [RotationConfig(CombatType.PvE, Name = "軍神のパイオンの使用時間")]
+    public float ARMYTime { get; set; } = 37;
 
     [RotationConfig(CombatType.PvE, Name = "First Song")]
     private Song FirstSong { get; set; } = Song.WANDERER;
@@ -172,14 +173,7 @@ public sealed class BRD_DefaultLelia3 : BardRotation
             if (BloodletterPvE.CanUse(out act, usedUp: true)) return true;
         }
 
-//Up
-        if (InCombat && Player.Level < 50)
-        {
-            if ((BloodletterPvE.Cooldown.CurrentCharges > 1) && BloodletterPvE.CanUse(out act, usedUp: true)) return true;
-            if (RagingStrikesPvE.CanUse(out act)) return true;
-        }
         //if (BloodletterLogic(out act)) return true;
-//UpEnd
 
         return base.AttackAbility(nextGCD, out act);
     }
