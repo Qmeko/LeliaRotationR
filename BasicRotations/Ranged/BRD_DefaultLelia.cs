@@ -111,7 +111,9 @@ public sealed class BRD_DefaultLelia1 : BardRotation
             if (SongEndAfter(ARMYRemainTime) && (Song != Song.NONE || Player.HasStatus(true, StatusID.ArmysEthos))) return true;
         }
 
-        if (Song != Song.NONE && EmpyrealArrowPvE.CanUse(out act)) return true;
+//UpDate
+        if (/*Song != Song.NONE &&*/ EmpyrealArrowPvE.CanUse(out act)) return true;
+//UpDateEnd
 
         if (PitchPerfectPvE.CanUse(out act, skipCastingCheck: true, skipAoeCheck: true, skipComboCheck: true))
         {
@@ -181,6 +183,7 @@ public sealed class BRD_DefaultLelia1 : BardRotation
             //if ((BloodletterPvE.Cooldown.CurrentCharges > 1) &&  BloodletterPvE.CanUse(out act, usedUp: true)) return true;
             if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true)) return true;
             if (RagingStrikesPvE.CanUse(out act)) return true;
+            if (BarragePvE.CanUse(out act)) return true;
         }
 //UpDateEnd
 
@@ -215,7 +218,9 @@ public sealed class BRD_DefaultLelia1 : BardRotation
         if (ResonantArrowPvE.CanUse(out act)) return true;
 
         if (CanUseApexArrow(out act)) return true;
-        if (RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
+//UpDate
+        if (Player.HasStatus(true, StatusID.RagingStrikes) && RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
+//UpDateEnd
         if (BlastArrowPvE.CanUse(out act))
         {
             if (!Player.HasStatus(true, StatusID.RagingStrikes)) return true;
