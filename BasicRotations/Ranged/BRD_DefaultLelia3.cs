@@ -209,7 +209,9 @@ public sealed class BRD_DefaultLelia3 : BardRotation
         if (CanUseApexArrow(out act)) return true;
 //UpDate
         if (Player.HasStatus(true, StatusID.RagingStrikes) && RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
-//UpDateEnd        if (BlastArrowPvE.CanUse(out act))
+//UpDateEnd
+
+        if (BlastArrowPvE.CanUse(out act))
         {
             if (!Player.HasStatus(true, StatusID.RagingStrikes)) return true;
             if (Player.HasStatus(true, StatusID.RagingStrikes) && BarragePvE.Cooldown.IsCoolingDown) return true;
