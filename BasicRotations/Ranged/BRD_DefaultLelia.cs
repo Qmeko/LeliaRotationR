@@ -221,6 +221,7 @@ public sealed class BRD_DefaultLelia1 : BardRotation
 //UpDate
         if (Player.HasStatus(true, StatusID.RagingStrikes) && RadiantEncorePvE.CanUse(out act, skipComboCheck: true)) return true;
 //UpDateEnd
+
         if (BlastArrowPvE.CanUse(out act))
         {
             if (!Player.HasStatus(true, StatusID.RagingStrikes)) return true;
