@@ -1,4 +1,4 @@
-﻿using RotationSolver.Basic.Rotations.Duties;
+using RotationSolver.Basic.Rotations.Duties;
 
 namespace DefaultRotations.Tank;
 
@@ -219,7 +219,7 @@ public class PLD_DefaultLelia : PaladinRotation
     #region Extra Methods
     private bool UseOath(out IAction act, bool onLast = false)
     {
-        if (SheltronPvE.CanUse(out act)) return true;
+        if (InCombat && SheltronPvE.CanUse(out act)) return true;
         if (InterventionPvE.CanUse(out act)) return true;
 
         return false;
