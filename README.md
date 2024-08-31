@@ -1,7 +1,7 @@
 # To be used with [RotationSolverReborn](https://github.com/FFXIV-CombatReborn/RotationSolverReborn)
 ![GitHub all releases](https://img.shields.io/github/downloads/LTS-FFXIV/LTSDefaults/total)
 
-Download the latest version of DefaultRotations:
+Download the latest version of LeliaRotationsR:
 
 ```
 https://github.com/KouGithub2022/LeliaRotationR/releases/latest/download/LeliaRotationsR.dll
