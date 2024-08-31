@@ -10,8 +10,8 @@ public sealed class BRD_DefaultLelia1 : BardRotation
 {
     #region Config Options
     //[RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
-    [RotationConfig(CombatType.PvE, Name = "猛者をメヌエット時に使用する。")]
-    public bool BindWAND { get; set; } = false;
+    //[RotationConfig(CombatType.PvE, Name = "猛者をメヌエット時に使用する。")]
+    //public bool BindWAND { get; set; } = false;
 
     [Range(1, 45, ConfigUnitType.Seconds, 1)]
     [RotationConfig(CombatType.PvE, Name = "旅神のメヌエットの使用時間")]
@@ -28,7 +28,7 @@ public sealed class BRD_DefaultLelia1 : BardRotation
     [RotationConfig(CombatType.PvE, Name = "First Song")]
     private Song FirstSong { get; set; } = Song.WANDERER;
 
-    private bool BindWANDEnough => BindWAND && this.TheWanderersMinuetPvE.EnoughLevel;
+    //private bool BindWANDEnough => BindWAND && this.TheWanderersMinuetPvE.EnoughLevel;
     private float WANDRemainTime => 45 - WANDTime;
     private float MAGERemainTime => 45 - MAGETime;
     private float ARMYRemainTime => 45 - ARMYTime;
@@ -86,8 +86,7 @@ public sealed class BRD_DefaultLelia1 : BardRotation
 
                 if (RadiantFinalePvE.CanUse(out act) && Song == Song.WANDERER && (!BattleVoicePvE.Cooldown.IsCoolingDown || BattleVoicePvE.Cooldown.ElapsedAfter(118)))
                 {
-                    if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
-                    if (!BindWANDEnough) return true;
+                    if (Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
                 }
 
                 if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
@@ -100,25 +99,33 @@ public sealed class BRD_DefaultLelia1 : BardRotation
                     if (nextGCD.IsTheSameTo(true, BattleVoicePvE)) return true;
                     if (nextGCD.IsTheSameTo(true, RadiantEncorePvE)) return true;
 
-                    if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
+                    if (Player.HasStatus(true, StatusID.BattleVoice) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
                 }
-                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && Player.HasStatus(true, StatusID.RagingStrikes) && BarragePvE.CanUse(out act))
+                {
+                    if (Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
+                }
             }
 
             if (!RadiantFinalePvE.EnoughLevel)
             {
-                if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
+                if (!Player.HasStatus(true, StatusID.RagingStrikes) && BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
                 {
-                    //if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) 
-                        return true;
+                    if (Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
+                    if (Song != Song.NONE && !TheWanderersMinuetPvE.EnoughLevel) return true;
                 }
 
                 if (RagingStrikesPvE.CanUse(out act, isLastAbility: true))
                 {
-                    if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
-                    if (!BindWANDEnough) return true;
+                    if (Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
+                    if (Song != Song.NONE && !TheWanderersMinuetPvE.EnoughLevel) return true;
                 }
-                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+                if (Player.HasStatus(true, StatusID.RagingStrikes) && !Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act))
+                {
+                    if (Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
+                    if (Song != Song.NONE && !TheWanderersMinuetPvE.EnoughLevel) return true;
+                }
+                    
             }
         }
         else
