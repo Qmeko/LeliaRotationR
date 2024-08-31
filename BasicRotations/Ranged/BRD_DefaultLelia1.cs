@@ -10,19 +10,19 @@ public sealed class BRD_DefaultLelia1 : BardRotation
 {
     #region Config Options
     //[RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
-    [RotationConfig(CombatType.PvE, Name = "–ÒÒ‚ğƒƒkƒGƒbƒg‚Ég—p‚·‚éB")]
+    [RotationConfig(CombatType.PvE, Name = "çŒ›è€…ã‚’ãƒ¡ãƒŒã‚¨ãƒƒãƒˆæ™‚ã«ä½¿ç”¨ã™ã‚‹ã€‚")]
     public bool BindWAND { get; set; } = false;
 
     [Range(1, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "—·_‚ÌƒƒkƒGƒbƒg‚Ìg—pŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "æ—…ç¥ã®ãƒ¡ãƒŒã‚¨ãƒƒãƒˆã®ä½¿ç”¨æ™‚é–“")]
     public float WANDTime { get; set; } = 43;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Œ«l‚Ìƒoƒ‰[ƒh‚Ìg—pŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "è³¢äººã®ãƒãƒ©ãƒ¼ãƒ‰ã®ä½¿ç”¨æ™‚é–“")]
     public float MAGETime { get; set; } = 40;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "ŒR_‚ÌƒpƒCƒIƒ“‚Ìg—pŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "è»ç¥ã®ãƒ‘ã‚¤ã‚ªãƒ³ã®ä½¿ç”¨æ™‚é–“")]
     public float ARMYTime { get; set; } = 37;
 
     [RotationConfig(CombatType.PvE, Name = "First Song")]
@@ -102,16 +102,11 @@ public sealed class BRD_DefaultLelia1 : BardRotation
 
                     if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
                 }
-                //if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
             }
 
             if (!RadiantFinalePvE.EnoughLevel)
             {
-                //if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true))
-                //{
-                //    if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) return true;
-                //}
-
                 if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
                 {
                     //if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) 
@@ -123,8 +118,7 @@ public sealed class BRD_DefaultLelia1 : BardRotation
                     if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
                     if (!BindWANDEnough) return true;
                 }
-
-                //if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
             }
         }
         else
