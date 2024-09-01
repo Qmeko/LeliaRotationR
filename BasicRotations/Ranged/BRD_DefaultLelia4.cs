@@ -1,4 +1,5 @@
 using Lumina.Excel.GeneratedSheets;
+using System.ComponentModel.Design;
 
 namespace DefaultRotations.Ranged;
 
@@ -10,23 +11,23 @@ public sealed class BRD_TEST : BardRotation
 {
     #region Config Options
     //[RotationConfig(CombatType.PvE, Name = @"Use Raging Strikes on ""Wanderer's Minuet""")]
-    [RotationConfig(CombatType.PvE, Name = "–ÒŽÒ‚ðƒƒkƒGƒbƒgŽž‚ÉŽg—p‚·‚éB")]
+    [RotationConfig(CombatType.PvE, Name = "Use during Minuet of the War God.")]
     public bool BindWAND { get; set; } = false;
 
     [Range(1, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "—·_‚ÌƒƒkƒGƒbƒg‚ÌŽg—pŽžŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "Bard's Minuet usage time")]
     public float WANDTime { get; set; } = 43;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "Œ«l‚Ìƒoƒ‰[ƒh‚ÌŽg—pŽžŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "Mage's Ballad usage time")]
     public float MAGETime { get; set; } = 40;
 
     [Range(0, 45, ConfigUnitType.Seconds, 1)]
-    [RotationConfig(CombatType.PvE, Name = "ŒR_‚ÌƒpƒCƒIƒ“‚ÌŽg—pŽžŠÔ")]
+    [RotationConfig(CombatType.PvE, Name = "Army's Paeon usage time")]
     public float ARMYTime { get; set; } = 37;
 
     [RotationConfig(CombatType.PvE, Name = "Use experimental buff oGCD logic")]
-    public bool NewLogicType { get; set; } = false;
+    public bool NewLogicType { get; set; } = true;
 
     [RotationConfig(CombatType.PvE, Name = "First Song")]
     private Song FirstSong { get; set; } = Song.WANDERER;
@@ -38,6 +39,16 @@ public sealed class BRD_TEST : BardRotation
 
     private static bool InBurstStatus => !Player.WillStatusEnd(0, true, StatusID.RagingStrikes);
 
+    #endregion
+
+    #region Countdown logic
+    // Defines logic for actions to take during the countdown before combat starts.
+    protected override IAction? CountDownAction(float remainTime)
+    {
+        // tincture needs to be used on -2s exactly
+        if (remainTime <= 0.7f && UseBurstMedicine(out var act)) return act;
+        return base.CountDownAction(remainTime);
+    }
     #endregion
 
     #region oGCD Logic
@@ -96,25 +107,28 @@ public sealed class BRD_TEST : BardRotation
 
                 if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
                 {
-                    if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
+                    if (Player.HasStatus(true, StatusID.RadiantFinale)) return true;
                 }
 
-                if (RagingStrikesPvE.CanUse(out act/*, isLastAbility: true*/))
+                if (RagingStrikesPvE.CanUse(out act))
                 {
                     if (nextGCD.IsTheSameTo(true, BattleVoicePvE)) return true;
                     if (nextGCD.IsTheSameTo(true, RadiantEncorePvE)) return true;
 
-                    if (Player.HasStatus(true, StatusID.RadiantFinale) /*&& RadiantFinalePvE.Cooldown.ElapsedOneChargeAfterGCD(1)*/) return true;
+                    if (Player.HasStatus(true, StatusID.RadiantFinale)) return true;
                 }
-                //if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+                
+                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && Player.HasStatus(true, StatusID.RagingStrikes) && BarragePvE.CanUse(out act))
+                {
+                    return true;
+                }
             }
-
-            if (!NewLogicType)
-            { 
+            else
+            {
                 if (RagingStrikesPvE.CanUse(out act, isLastAbility: true))
                 {
-                    if (BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
-                    if (!BindWANDEnough) return true;
+                    if (Player.HasStatus(true, StatusID.BattleVoice) && BindWANDEnough && Song == Song.WANDERER && TheWanderersMinuetPvE.EnoughLevel) return true;
+                    if (!Player.HasStatus(true, StatusID.BattleVoice) && !BindWANDEnough) return true;
                 }
 
                 if (RadiantFinalePvE.CanUse(out act, skipAoeCheck: true))
@@ -125,12 +139,12 @@ public sealed class BRD_TEST : BardRotation
                 if (BattleVoicePvE.CanUse(out act, skipAoeCheck: true))
                 {
                     if (nextGCD.IsTheSameTo(true, RadiantFinalePvE)) return true;
-
                     if (nextGCD.IsTheSameTo(true, RadiantEncorePvE)) return true;
 
                     if (Player.HasStatus(true, StatusID.RagingStrikes) && RagingStrikesPvE.Cooldown.ElapsedOneChargeAfterGCD(1)) return true;
                 }
-                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && BarragePvE.CanUse(out act)) return true;
+
+                if (!Player.HasStatus(true, StatusID.HawksEye_3861) && Player.HasStatus(true, StatusID.RagingStrikes) && BarragePvE.CanUse(out act)) return true;
             }
         }
 
@@ -141,9 +155,9 @@ public sealed class BRD_TEST : BardRotation
             if (SongEndAfter(ARMYRemainTime) && (Song != Song.NONE || Player.HasStatus(true, StatusID.ArmysEthos))) return true;
         }
 
-//UpDate
+        //UpDate
         if (/*Song != Song.NONE &&*/ EmpyrealArrowPvE.CanUse(out act)) return true;
-//UpDateEnd
+        //UpDateEnd
 
         if (PitchPerfectPvE.CanUse(out act, skipCastingCheck: true, skipAoeCheck: true, skipComboCheck: true))
         {
@@ -206,25 +220,17 @@ public sealed class BRD_TEST : BardRotation
     protected override bool GeneralGCD(out IAction? act)
     {
         if (IronJawsPvE.CanUse(out act)) return true;
-//UpDate
-        if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
+
+        // Iron Jaws ã®è¿½åŠ æ¡ä»¶//60FPSæ™‚30ãƒ•ãƒ¬ãƒ¼ãƒ 0.5s--300ãƒ•ãƒ¬ãƒ¼ãƒ 5.0s--
+        if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true)
+            && (IronJawsPvE.Target.Target?.WillStatusEnd(300, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
         {
-            if (IronJawsPvE.CanUse(out act, skipStatusProvideCheck: true) && 
-                (IronJawsPvE.Target.Target?.WillStatusEnd(30, true, IronJawsPvE.Setting.TargetStatusProvide ?? []) ?? false))
+            if (Player.HasStatus(true, StatusID.RadiantFinale)
+                && Player.WillStatusEndGCD(1, 0, true, StatusID.RadiantFinale))
             {
-                if (Player.HasStatus(true, StatusID.RagingStrikes) &&
-                    Player.WillStatusEndGCD(1, 0, true, StatusID.RagingStrikes))
-                {
-                    return true;
-                }
-                else if (Player.HasStatus(true, StatusID.RadiantFinale) &&
-                         Player.WillStatusEndGCD(1, 0, true, StatusID.RadiantFinale))
-                {
-                    return true;
-                }
+                return true;
             }
         }
-//UpDateEnd
 
         if (ResonantArrowPvE.CanUse(out act)) return true;
 
@@ -240,21 +246,19 @@ public sealed class BRD_TEST : BardRotation
             if (Player.HasStatus(true, StatusID.RagingStrikes) && BarragePvE.Cooldown.IsCoolingDown) return true;
         }
 
-        //aoe
+        // AOE
         if (ShadowbitePvE.CanUse(out act)) return true;
         if (WideVolleyPvE.CanUse(out act)) return true;
         if (QuickNockPvE.CanUse(out act)) return true;
 
-        if (IronJawsPvE.EnoughLevel && (HostileTarget?.HasStatus(true, StatusID.Windbite, StatusID.Stormbite) == true) && (HostileTarget?.HasStatus(true, StatusID.VenomousBite, StatusID.CausticBite) == true))
-        {
-            // Do not use WindbitePvE or VenomousBitePvE if both statuses are present and IronJawsPvE has enough level
-        }
+        if (IronJawsPvE.EnoughLevel &&
+            (HostileTarget?.HasStatus(true, StatusID.Windbite, StatusID.Stormbite) == true) &&
+            (HostileTarget?.HasStatus(true, StatusID.VenomousBite, StatusID.CausticBite) == true))
         else
         {
             if (WindbitePvE.CanUse(out act)) return true;
             if (VenomousBitePvE.CanUse(out act)) return true;
         }
-
 
         if (RefulgentArrowPvE.CanUse(out act, skipComboCheck: true)) return true;
         if (StraightShotPvE.CanUse(out act)) return true;
@@ -291,9 +295,9 @@ public sealed class BRD_TEST : BardRotation
 
         if (HeartbreakShotPvE.CanUse(out act, usedUp: true))
         {
-            if ((!isRagingStrikesLevel) 
-                || (isRagingStrikesLevel && !isBattleVoiceLevel && Player.HasStatus(true, StatusID.RagingStrikes)) 
-                || (isBattleVoiceLevel && !isRadiantFinaleLevel && Player.HasStatus(true, StatusID.RagingStrikes) && Player.HasStatus(true, StatusID.BattleVoice)) 
+            if ((!isRagingStrikesLevel)
+                || (isRagingStrikesLevel && !isBattleVoiceLevel && Player.HasStatus(true, StatusID.RagingStrikes))
+                || (isBattleVoiceLevel && !isRadiantFinaleLevel && Player.HasStatus(true, StatusID.RagingStrikes) && Player.HasStatus(true, StatusID.BattleVoice))
                 || isRadiantFinaleLevel && Player.HasStatus(true, StatusID.RagingStrikes) && Player.HasStatus(true, StatusID.BattleVoice) && Player.HasStatus(true, StatusID.RadiantFinale)) return true;
         }
 
